@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const models = require('../models')
+// const models = require('../models')
 //get calories for certain item: FDA
 // community forum get all posts from users
 router.get('/', (req, res) => {
@@ -10,3 +10,4 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
 
 })
+module.exports=router;
