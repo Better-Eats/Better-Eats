@@ -9,9 +9,10 @@ let options = {
 
 module.exports = {
   getFoodID: (data, cb) => {
-    axios.get(`${options.url}/foods/search`, {headers: options.header, query: {query: data.query, dataType: data.dataType, pageSize: 5}})
+    axios.get(`${options.url}/foods/search`, {headers: options.header, params: {query: data.query, dataType: data.dataType, pageSize: 5}})
       .then(cb)
       .catch((err) => {
+        console.log(err);
         console.log('error at fdcid api');
       })
   },
@@ -27,7 +28,18 @@ module.exports = {
 
   saveNewItem: async (data, cb) => {
     try {
-      const savedI = await db.bettereats.findOneAndUpdate({uid: data.uid}, {$push: {items: {}}}, {returnDocument: 'after'})
+      const savedI = await db.bettereats.findOneAndUpdate(
+        {
+          uid: data.uid, date: data.date
+        },
+        {
+          $set: {totalcal: data.totalcal},
+          $push: {items: {foodName: data.foodName, calories: data.calories, carbohydrates: data.carbohydrates, fat: data.fat, protein: data.protein}}
+        },
+        {
+          returnDocument: 'after',
+          upsert: true
+        })
       cb(err, savedI);
     } catch(err) {
       cb(err);
