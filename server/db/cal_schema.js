@@ -9,11 +9,26 @@ const calSchema = new mongoose.Schema({
     default: []
   },
   totalcal: {
-    type: Number
+    type: Number,
+    default: 0
+  },
+  totalCarbs: {
+    type: Number,
+    default: 0
+  },
+  totalFat: {
+    type: Number,
+    default: 0
+  },
+  totalProtein: {
+    type: Number,
+    default: 0
   },
   date:{
     type: Date
   }
 }, {timestamp: true})
 
-module.exports = mongoose.model('cal', calSchema);
+const CAL = mongoose.model('cal', calSchema);
+
+module.exports = CAL;

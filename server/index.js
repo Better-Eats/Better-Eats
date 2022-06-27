@@ -9,7 +9,7 @@ app.use(express.json());
 
 
 //routes
-// app.use('/users', router.users);
+app.use('/users', router.users);
 app.use('/yelp', router.yelp);
 app.use('/cal', router.cal);
 // app.use('/menu', router.menu);
