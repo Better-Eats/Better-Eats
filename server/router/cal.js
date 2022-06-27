@@ -8,6 +8,12 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/userinfo', (req, res) => {
+  fetchAPI.getUserInfo(req.query, (response) => {
+    res.status(200).send(response);
+  });
+});
+
 /* example req.body = {
   uid: 1232131,
   fdcid: 321,

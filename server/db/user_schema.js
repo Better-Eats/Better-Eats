@@ -4,12 +4,11 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String
   },
+
   goal: {
     type: Number
   },
-  date: {
-    type: Date
-  },
+
   uid: {
     type: String
   }

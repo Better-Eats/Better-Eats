@@ -5,6 +5,7 @@ const cartSchema = new mongoose.Schema({
   uid: {
     type: String
   },
+
   order: {
     type: Array,
     default: []

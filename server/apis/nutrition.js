@@ -24,6 +24,15 @@ module.exports = {
       })
   },
 
+  getUserInfo: async (data , cb) => {
+    try {
+      const userI = await CAL.find({uid: Number(data.id), date: data.date})
+      cb(userI);
+    } catch(err) {
+      console.log('error finding user info', err);
+    }
+  },
+
   saveNewItem: async (data, cb) => {
     try {
       const newDoc = new CAL({uid: data.uid, date: data.date});
