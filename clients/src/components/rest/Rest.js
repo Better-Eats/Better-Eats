@@ -9,11 +9,11 @@ export default function Rest({resta}){
       <div className="card-container">
         <a href={resta['url']}>{ resta['name'] }</a>
         <div className = 'price-star'>{resta['price']+'  '}
-
+        <StarRatings rating={resta['rating']} starRatedColor="#DA2C38"
+            numberOfStarts={5} starDimension="15px" starSpacing="1px" name='rating'/>
         </div>
         <div>Phone: {resta['display_phone']}</div>
         <div>Address: {resta['location']['address1']}, {resta['location']['city']}</div>
-
       </div>
       <div className='card-image'>
       <img id="resta" src={ resta['image_url'] } alt=""/>

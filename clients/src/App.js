@@ -7,19 +7,20 @@ import Home from './pages/home/Home.js';
 import Curcal from './pages/curcal/Curcal.js';
 import Profile from './pages/profile/Profile.js';
 import Location from './pages/location/Location.js';
-
+import NavBar from './components/navbar/Navbar.js';
 function App() {
 
 
 
   return (
     <Router>
-      <Routes>
-        <Route exact path="/" element={<Home />}/>
-        <Route path="/curcal" element={<Curcal/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/location" element={<Location/>}/>
-      </Routes>
+      <NavBar />
+        <Routes>
+          <Route exact path="/" element={<Home />}/>
+          <Route path="/curcal" element={<Curcal/>}/>
+          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/location" element={<Location/>}/>
+        </Routes>
     </Router>
   );
 }

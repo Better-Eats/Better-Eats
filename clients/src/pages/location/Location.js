@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default function Location(){
   const [rest, setRest] = useState([]);
-
+  const [ordertype, setOrdertype] = useState('res');
   const [bounds, setBounds] = useState(null);
   const [coordinates, setCoordinates] = useState({});
 
@@ -21,7 +21,7 @@ export default function Location(){
   useEffect(() => {
     const getR = async() =>{
       try{
-        const res = await axios.post('/yelp', coordinates);
+        const res = await axios.post('/yelp', {coordinates: coordinates , ordertype: ordertype});
         console.log(res.data.businesses,'rest list')
         setRest(res.data.businesses);
       }catch(err){
@@ -29,17 +29,30 @@ export default function Location(){
       }
     }
     getR();
-  }, [coordinates, bounds]);
+  }, [coordinates, ordertype, bounds]);
 
+  const changeType = (e) => {
+    e.preventDefault();
+    setOrdertype(e.target.name);
+    axios.post('/yelp', {coordinates, ordertype: e.target.name})
+    .then((res) => setRest(res.data.businesses))
+    .catch((err) => console.log(err));
+  }
 
   return (
     <div className = 'location' >
       <div className = 'restlist'>
+        <div className="locationBtn">
+          <button className= {ordertype === 'res' ? 'resSelected' : "restuarants"} name="res" onClick={changeType}>Restuarants</button>
+          <button  className= {ordertype === 'gro' ? 'groSelected' : "groceries"} name="gro" onClick={changeType}>Grocery Stores</button>
+        </div>
+        <div className = 'yelps'>
         {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta}/>) : (<></>)}
-      </div>
+        </div>
+        </div>
       <div className = 'map'>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyB2yYzf8EIgdVXBoenDe5o3OH2N40dOfGo' }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
           defaultCenter={coordinates}
           center={coordinates}
           defaultZoom={14}
@@ -56,7 +69,7 @@ export default function Location(){
             lng={Number(place.coordinates.longitude)}
             key={i}
           >
-            <LocationOnIcon color='primary' fontSize="large" />
+            <LocationOnIcon styles={{color: "#DA2C38" }} fontSize="large" />
           </div>
         ))}
         </GoogleMapReact>
