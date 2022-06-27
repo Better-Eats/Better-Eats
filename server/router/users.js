@@ -56,9 +56,17 @@ router.get('/info', (req, res) => {
   });
 });
 
-// get user historical(add a param for this) and current(default) intakes: uid, date, food item, calories;
-router.get('/intake/:uid', (req, res) => {
+/*
+example req.query = {
+  id: 1321321
+}
+*/
 
+// get user historical(add a param for this) and current(default) intakes: uid, date, food item, calories;
+router.get('/history', (req, res) => {
+  fetchAPI.getUserHistory(req.query, (response) => {
+    res.status(200).send(response);
+  });
 });
 
 module.exports=router;
