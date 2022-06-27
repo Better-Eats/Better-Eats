@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react';
 import Rest from '../../components/rest/Rest.js';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import axios from 'axios';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Location(){
   const [rest, setRest] = useState([]);
@@ -41,16 +42,24 @@ export default function Location(){
 
   return (
     <div className = 'location' >
-      <div className = 'restlist'>
-        <div className="locationBtn">
-          <button className= {ordertype === 'res' ? 'resSelected' : "restuarants"} name="res" onClick={changeType}>Restuarants</button>
-          <button  className= {ordertype === 'gro' ? 'groSelected' : "groceries"} name="gro" onClick={changeType}>Grocery Stores</button>
-        </div>
-        <div className = 'yelps'>
-        {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta}/>) : (<></>)}
-        </div>
-        </div>
+    <div className = 'restlist'>
+      <div className="locationBtn">
+        <div><button className={ordertype === "res" ? 'resSelected' : "restuarants"} onClick={changeType} name="res">Restuarants</button></div>
+        <div><button className={ordertype === "gro" ? 'groSelected': "groceries" }  onClick={changeType} name="gro">Grocery Stores</button></div>
+      </div>
+      <div className = 'yelps'>
+      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta}/>) : (<></>)}
+      </div>
+    </div>
       <div className = 'map'>
+        <div className="LogoSearch">
+          <div className="Search">
+            <div className='s-icon'>
+              <SearchIcon />
+            </div>
+            <input type='text' placeholder='#Explorer' />
+          </div>
+        </div>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
           defaultCenter={coordinates}
@@ -69,12 +78,11 @@ export default function Location(){
             lng={Number(place.coordinates.longitude)}
             key={i}
           >
-            <LocationOnIcon styles={{color: "#DA2C38" }} fontSize="large" />
+            <LocationOnIcon style={{ color: '#DA2C38'}} fontSize="large" />
           </div>
         ))}
         </GoogleMapReact>
       </div>
     </div>
-
   )
 }

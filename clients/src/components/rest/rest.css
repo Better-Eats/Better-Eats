@@ -3,19 +3,20 @@
   transition: 0.3s;
   border: 1.5px solid #2E5266;
   border-radius: 5px;
-  width: 460px;
-  height: 200px;
+  width: 490px;
+  height: 190px;
   margin: 20px 50px;
   overflow: hidden;
   float: left;
   display: flex;
+  justify-content: space-between;
 }
 
 #resta  {
-  margin: 40px 40px 0px 40px;
-  width: 100px;
-  height: 100px;
-  border: 1.5px solid #2E5266;
+  margin: 20px 40px 0px 40px;
+  width: 140px;
+  height: 140px;
+  /* border: 1.5px solid #2E5266; */
   border-radius: 5px;
   object-fit: cover;
 }
@@ -27,5 +28,19 @@
 
 .card-container {
   float: left;
-  padding: 40px 16px;
+  padding: 20px 16px;
+}
+
+.resta-name {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.resta-name:hover{
+  color: #2E5266;
+  cursor: pointer;
+}
+
+.open-info {
+  display: flex;
 }
