@@ -1,16 +1,17 @@
 const router = require('express').Router();
 const fetchAPI = require('../apis/nutrition.js');
 
+/*
+req.query = {
+  query: frosted flakes,
+  dataType: Branded
+}
+*/
+
 // get calories for certain item: FDA
 router.get('/', (req, res) => {
   fetchAPI.getFoodID(req.query, (response) => {
     res.status(200).send(response.data);
-  });
-});
-
-router.get('/userinfo', (req, res) => {
-  fetchAPI.getUserInfo(req.query, (response) => {
-    res.status(200).send(response);
   });
 });
 
@@ -26,6 +27,7 @@ router.get('/userinfo', (req, res) => {
   }
 } */
 
+// post new item into dashboard
 router.post('/', (req, res) => {
   fetchAPI.getFoodNutrients(req.body, (response) => {
     const labelNutrients = response.data.labelNutrients;

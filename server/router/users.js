@@ -1,8 +1,17 @@
 const router = require('express').Router();
 const USER = require('../db/user_schema.js');
 const CAL = require('../db/cal_schema.js');
+const fetchAPI = require('../apis/nutrition.js');
 
-// login-save user info: uid, name, email
+/*
+example req.body = {
+  username: ji1hansol,
+  goal: 2000,
+  uid: 1321321
+}
+*/
+
+// login-save user info: username, goal, uid
 router.post('/newUser', async (req, res) => {
   const newUser = new USER(req.body)
   try {
@@ -15,6 +24,13 @@ router.post('/newUser', async (req, res) => {
   }
 });
 
+/*
+example req.body = {
+  uid: 1321321
+  date: 06/27/2022
+}
+*/
+
 // new cal doc for when midnight passes
 router.post('/newDay', async (req, res) => {
   try {
@@ -24,6 +40,20 @@ router.post('/newDay', async (req, res) => {
   } catch(err) {
     res.status(500).send(err);
   }
+});
+
+/*
+example req.query = {
+  id: 1321321,
+  date: 6/27/2022
+}
+*/
+
+// get all user info (calories, carbs, fat, protein, date)
+router.get('/info', (req, res) => {
+  fetchAPI.getUserInfo(req.query, (response) => {
+    res.status(200).send(response);
+  });
 });
 
 // get user historical(add a param for this) and current(default) intakes: uid, date, food item, calories;
