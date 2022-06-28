@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/users', router.users);
 app.use('/yelp', router.yelp);
 app.use('/cal', router.cal);
-// app.use('/menu', router.menu);
+app.use('/menu', router.menu);
 // app.use('/forum', router.forum)
 
 
