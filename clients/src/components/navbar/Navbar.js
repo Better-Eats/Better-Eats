@@ -1,9 +1,21 @@
 import "./navbar.css";
 import {Link} from  "react-router-dom";
 import logo from "../../assets/logo.png"
-
-export default function NavBar() {
-
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import PersonIcon from '@mui/icons-material/Person';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LogoutIcon from '@mui/icons-material/Logout';
+import {signOut} from 'firebase/auth';
+import {auth} from '../../firebase-config.js';
+export default function NavBar({isAuth, setIsAuth}) {
+  const signUserOut = () => {
+    signOut(auth)
+    .then(()=> {
+      localStorage.clear();
+      setIsAuth(false);
+      window.location.pathname="/";
+    })
+  }
   return(
     <div className="navbarContainer">
       <div className="navbarLeft" >  </div>
@@ -13,7 +25,12 @@ export default function NavBar() {
         </Link>
       </div>
     <div className="navbarRight">
-
+      {isAuth? <div className="navIcons">
+      <RestaurantIcon className="navIcon"/>
+      <PersonIcon className="navIcon" />
+      <ShoppingCartIcon className="navIcon"/>
+      <LogoutIcon className="navIcon" onClick={signUserOut}/>
+      </div> : <></>}
     </div>
   </div>
   )
