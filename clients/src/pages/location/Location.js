@@ -8,6 +8,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function Location(){
   const [rest, setRest] = useState([]);
+  const [view, setView] = useState('map');
+  const [det, setDet] = useState();
   const [ordertype, setOrdertype] = useState('res');
   const [bounds, setBounds] = useState(null);
   const [coordinates, setCoordinates] = useState({});
@@ -39,7 +41,7 @@ export default function Location(){
     .then((res) => setRest(res.data.businesses))
     .catch((err) => console.log(err));
   }
-
+  console.log('det',det)
   return (
     <div className = 'location' >
     <div className = 'restlist'>
@@ -48,7 +50,7 @@ export default function Location(){
         <div><button className={ordertype === "gro" ? 'groSelected': "groceries" }  onClick={changeType} name="gro">Grocery Stores</button></div>
       </div>
       <div className = 'yelps'>
-      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta}/>) : (<></>)}
+      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setDet={setDet}/>) : (<></>)}
       </div>
     </div>
       <div className = 'map'>
