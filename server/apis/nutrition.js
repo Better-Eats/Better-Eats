@@ -1,5 +1,6 @@
 const axios = require('axios');
 const CAL = require('../db/cal_schema.js');
+const GROC = require('../db/grocery_schema.js');
 
 let options = {
   url: 'https://api.nal.usda.gov/fdc/v1',
@@ -42,43 +43,60 @@ module.exports = {
     }
   },
 
-  getGroceryItems: async (cb) => {
-    const foundationItems = await axios.get(`${options.url}/foods/search`, {headers: options.header, params: {dataType: 'Foundation', pageSize: 10}});
+  getGroceryItems: async (data, cb) => {
+    try {
+      const groceryItems = await GROC.find({}, null, {limit: data.limit})
+      cb(groceryItems);
+    } catch(err) {
+      console.log('error getting grocery items', err);
+    }
+  },
 
-    // const brandedItems = await axios.get(`${options.url}/foods/search`, {headers: options.header, params: {dataType: 'Branded', pageSize: 20}});
-
-    const promiseArray = [];
-    promiseArray.push(foundationItems);
-    // promiseArray.push(brandedItems);
-    return Promise.all(promiseArray)
-      .then((data) => {
-        const allIDs = [];
-        data.forEach((category) => {
-          const foods = category.data.foods;
-          foods.forEach((item) => {
-            allIDs.push(item.fdcId);
-          })
-        });
-        return allIDs;
+  addToDb: (cb) => {
+    axios.get(`${options.url}/foods/search`, {headers: options.header, params: {dataType: 'Branded', pageSize: 200}})
+      .then((results) => {
+        const foodIds = [];
+        results.data.foods.forEach((item) => {
+          foodIds.push(item.fdcId);
+        })
+        return foodIds;
       })
-      .then((ids) => {
-        let index = 0;
-          axios.get(`${options.url}/foods`, {headers: options.header, params: {fdcIds: ids.join(',')}})
-            .then((res) => {
-              const results = [];
-              results.push(res.data);
-              return results;
+      .then((list) => {
+        let searchString = list.slice(180, 200);
+        axios.get(`${options.url}/foods`, {headers: options.header, params: {fdcIds: searchString.join(',')}})
+          .then((res) => {
+            res.data.forEach((item) => {
+              if (Object.keys(item.labelNutrients).length < 3 || item.brandName === 'Farmland') {
+                return;
+              }
+              let data = {
+                description: item.description,
+                brandName: item.brandName,
+                servingSize: item.servingSize + item.servingSizeUnit,
+                ingredients: item.ingredients,
+                fat: item.labelNutrients.fat.value,
+                carbohydrates: item.labelNutrients.carbohydrates.value,
+                protein: item.labelNutrients.protein.value,
+                calories: item.labelNutrients.calories.value
+              };
+              // results.push(data);
+              const groceryItem = new GROC(data);
+              // console.log(item.labelNutrients);
+              groceryItem.save()
+                .then(() => {
+                  console.log('saved');
+                })
+                .catch((err) => {
+                  console.log('error while saving', err);
+                })
             })
-            .then((results) => {
-              console.log('results', results[0].length);
-              cb(results);
-            })
-            .catch((err) => {
-              console.log(err);
-            })
+          })
+      })
+      .then(() => {
+        cb('passed');
       })
       .catch((err) => {
-        console.log('error retrieving grocery items');
+        console.log('error at add to db', err);
       })
   },
 

@@ -7,13 +7,24 @@ const fetchAPI = require('../apis/nutrition.js');
 
 // });
 
-// get items from groceries
+// get items from groceries. Default is 20 items returned.
 router.get('/', (req, res) => {
-  fetchAPI.getGroceryItems((response) => {
+  let data = req.query
+  if (req.query.limit === 'undefined') {
+    data = {limit: 20};
+  }
+  console.log(req.query);
+  fetchAPI.getGroceryItems(data, (response) => {
     res.status(200).send(response);
   });
 
 });
+
+router.get('/database', (req, res) => {
+  fetchAPI.addToDb((response) => {
+    res.send('added to db');
+  })
+})
 
 
 module.exports = router;
