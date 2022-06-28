@@ -4,10 +4,13 @@ import {useEffect, useState} from 'react';
 import Rest from '../../components/rest/Rest.js';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import axios from 'axios';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Location(){
   const [rest, setRest] = useState([]);
-
+  const [view, setView] = useState('map');
+  const [det, setDet] = useState();
+  const [ordertype, setOrdertype] = useState('res');
   const [bounds, setBounds] = useState(null);
   const [coordinates, setCoordinates] = useState({});
 
@@ -21,7 +24,7 @@ export default function Location(){
   useEffect(() => {
     const getR = async() =>{
       try{
-        const res = await axios.post('/yelp', coordinates);
+        const res = await axios.post('/yelp', {coordinates: coordinates , ordertype: ordertype});
         console.log(res.data.businesses,'rest list')
         setRest(res.data.businesses);
       }catch(err){
@@ -29,17 +32,38 @@ export default function Location(){
       }
     }
     getR();
-  }, [coordinates, bounds]);
+  }, [coordinates, ordertype, bounds]);
 
-
+  const changeType = (e) => {
+    e.preventDefault();
+    setOrdertype(e.target.name);
+    axios.post('/yelp', {coordinates, ordertype: e.target.name})
+    .then((res) => setRest(res.data.businesses))
+    .catch((err) => console.log(err));
+  }
+  console.log('det',det)
   return (
     <div className = 'location' >
-      <div className = 'restlist'>
-        {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta}/>) : (<></>)}
+    <div className = 'restlist'>
+      <div className="locationBtn">
+        <div><button className={ordertype === "res" ? 'resSelected' : "restuarants"} onClick={changeType} name="res">Restuarants</button></div>
+        <div><button className={ordertype === "gro" ? 'groSelected': "groceries" }  onClick={changeType} name="gro">Grocery Stores</button></div>
       </div>
+      <div className = 'yelps'>
+      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setDet={setDet}/>) : (<></>)}
+      </div>
+    </div>
       <div className = 'map'>
+        <div className="LogoSearch">
+          <div className="Search">
+            <div className='s-icon'>
+              <SearchIcon />
+            </div>
+            <input type='text' placeholder='#Explorer' />
+          </div>
+        </div>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyB2yYzf8EIgdVXBoenDe5o3OH2N40dOfGo' }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
           defaultCenter={coordinates}
           center={coordinates}
           defaultZoom={14}
@@ -56,12 +80,11 @@ export default function Location(){
             lng={Number(place.coordinates.longitude)}
             key={i}
           >
-            <LocationOnIcon color='primary' fontSize="large" />
+            <LocationOnIcon style={{ color: '#DA2C38'}} fontSize="large" />
           </div>
         ))}
         </GoogleMapReact>
       </div>
     </div>
-
   )
 }

@@ -10,7 +10,13 @@ import Profile from './pages/profile/Profile.js';
 import Location from './pages/location/Location.js';
 import NavBar from './components/navbar/Navbar.js';
 function App() {
+<<<<<<< HEAD
   const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+=======
+
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+
+>>>>>>> 3264ab39d46171282a8a0079596b75362ff31bc4
   return (
     <Router>
       <NavBar />
