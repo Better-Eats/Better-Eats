@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     const restas = await axios.get(`${process.env.YELP_URL}?term=${ordertype}&latitude=${lat}&longitude=${lng}`, {headers: {
       Authorization: `Bearer ${process.env.YELP}`}});
     res.status(200).send(restas.data);
-  }catch(err){
+  } catch(err){
   res.status(500).send(err)
 }
 });

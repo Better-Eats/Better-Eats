@@ -17,7 +17,11 @@ function App() {
     <Router>
       <NavBar />
         <Routes>
+
           <Route exact path="/" element={<Home isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
+
+          <Route exact path="/" element={<Home isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
+
           <Route path="/curcal" element={<Curcal/>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/location" element={<Location/>}/>
@@ -25,5 +29,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
