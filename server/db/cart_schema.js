@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+
 //current cart information
 const cartSchema = new mongoose.Schema({
   uid: {
     type: String
   },
+
   order: {
     type: Array,
     default: []

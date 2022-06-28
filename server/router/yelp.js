@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
       }
     }
     res.status(200).send(restas.data);
-  }catch(err){
+  } catch(err){
   res.status(500).send(err)
 }
 })
