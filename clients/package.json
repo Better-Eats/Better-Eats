@@ -2,8 +2,11 @@
   "name": "clients",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:3001",
+  "proxy": "http://localhost:3001",
   "dependencies": {
+    "@devexpress/dx-react-chart": "^3.0.3",
+    "@devexpress/dx-react-chart-material-ui": "^3.0.3",
+    "@devexpress/dx-react-core": "^3.0.3",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",
