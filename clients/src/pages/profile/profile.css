@@ -12,7 +12,7 @@
   /* position: absolute; */
   margin: auto;
   width: 1000px;
-  height: 700px;
+  /* height: 800px; */
   /* width: 761px; */
   /* height: 20%; */
   left: 59px;
@@ -41,5 +41,5 @@
 .innerPicture {
   border-radius: 50%;
   width: 150px;
-  height: auto;
+  height: 150px;
 }

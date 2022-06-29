@@ -11,6 +11,8 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { ValueScale, Animation } from '@devexpress/dx-react-chart';
 import {auth} from '../../firebase-config.js';
+import axios from 'axios';
+
 
 
 
@@ -21,6 +23,27 @@ export default function Profile(){
     {argument: 'Tuesday', value: 30},
     {argument: 'Wednesday', value: 40},
   ];
+  const [userData, setUserData] = useState([]);
+
+
+
+//1321321 uid
+//limit :7
+  useEffect(() => {
+    axios.get('/users/history', {params: {id: 1321321, limit: 7}})
+      .then((results) => {
+        const history = [];
+        console.log(results.data);
+        results.data.forEach((item) => {
+          history.push({argument: item.date, value: item.totalcal + Math.random(1) * 100})
+        })
+        setUserData(history);
+      })
+      .then(() => {
+        console.log('this is userdata', userData);
+      })
+  }, [])
+
 
   return (
     <div className='profile'>
@@ -31,15 +54,28 @@ export default function Profile(){
       <div className='welcome'>
         Welcome, {auth.currentUser.displayName}
       </div>
+      <div>
+        <div>
+          <div>
+            <button>
+              goal history
+            </button>
+            <button>
+              item history
+            </button>
+          </div>
 
-      <div className='graph'>
-        <Paper>
-          <Chart data={data}>
-            <ArgumentAxis />
-            <ValueAxis />
-            <BarSeries valueField='value' argumentField='argument' />
-          </Chart>
-        </Paper>
+        </div>
+        <div className='graph'>
+          <Paper>
+            <Chart data={userData}>
+              <ArgumentAxis />
+              <ValueAxis />
+              <BarSeries valueField='value' argumentField='argument'  />
+              <Animation />
+            </Chart>
+          </Paper>
+        </div>
       </div>
     </div>
 
