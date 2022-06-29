@@ -26,9 +26,15 @@ export default function NavBar({isAuth, setIsAuth}) {
       </div>
     <div className="navbarRight">
       {isAuth? <div className="navIcons">
+
+      <Link to="/location" style={{textDecoration:"none"}}>
       <RestaurantIcon className="navIcon"/>
+      </Link>
+      <Link to="/profile" style={{textDecoration:"none"}}>
       <PersonIcon className="navIcon" />
+      </Link>
       <ShoppingCartIcon className="navIcon"/>
+
       <LogoutIcon className="navIcon" onClick={signUserOut}/>
       </div> : <></>}
     </div>
