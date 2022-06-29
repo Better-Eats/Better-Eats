@@ -1,21 +1,22 @@
 .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  border: 1.5px solid #A8D0E6;
+  border: 1.5px solid #2E5266;
   border-radius: 5px;
-  width: 400px;
-  height: 250px;
-  margin: 20px 40px;
+  width: 490px;
+  height: 190px;
+  margin: 0px 50px 20px 50px;
   overflow: hidden;
   float: left;
   display: flex;
+  justify-content: space-between;
 }
 
 #resta  {
-  margin: 40px 40px 0px 40px;
-  width: 80px;
-  height: 80px;
-  border: 1.5px solid #A8D0E6;
+  margin: 20px 40px 0px 40px;
+  width: 140px;
+  height: 140px;
+  /* border: 1.5px solid #2E5266; */
   border-radius: 5px;
   object-fit: cover;
 }
@@ -27,5 +28,20 @@
 
 .card-container {
   float: left;
-  padding: 40px 16px;
+  padding: 20px 16px;
+}
+
+.resta-name {
+  /* font-weight: bold; */
+  font-size: 18px;
+  font-family: 'Poppins', 'Sans';
+}
+
+.resta-name:hover{
+  color: #2E5266;
+  cursor: pointer;
+}
+
+.open-info {
+  display: flex;
 }

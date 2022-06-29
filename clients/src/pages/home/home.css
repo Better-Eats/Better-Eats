@@ -1,0 +1,51 @@
+.home{
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/Home.jpg');
+  -moz-background-size:100% 100%;
+  background-size: cover;
+}
+.homeMotto{
+  position: absolute;
+  width: 761px;
+  height: 96px;
+  left: 59px;
+  top: 432px;
+  font-family: "Poppins","Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 96px;
+}
+.homeDesc{
+  position: absolute;
+  width: 660px;
+  height: 96px;
+  left: 59px;
+  top: 571px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 44px;
+
+}
+.homeBtn {
+  position: absolute;
+  width: 381px;
+  height: 67px;
+  left: 59px;
+  top: 734px;
+  color: white;
+  font-size: 30px;
+  border: 2px solid #B7CE63;
+  background: #B7CE63;
+  border-radius: 40px;
+}
+
+.homeBtn:hover{
+  cursor: pointer;
+  color: #B7CE63;
+  border: solid 2px white;
+  background-color: white;
+}
