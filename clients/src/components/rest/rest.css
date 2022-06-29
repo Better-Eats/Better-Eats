@@ -5,7 +5,7 @@
   border-radius: 5px;
   width: 490px;
   height: 190px;
-  margin: 20px 50px;
+  margin: 0px 50px 20px 50px;
   overflow: hidden;
   float: left;
   display: flex;
@@ -32,8 +32,9 @@
 }
 
 .resta-name {
-  font-weight: bold;
-  font-size: 20px;
+  /* font-weight: bold; */
+  font-size: 18px;
+  font-family: 'Poppins', 'Sans';
 }
 
 .resta-name:hover{
