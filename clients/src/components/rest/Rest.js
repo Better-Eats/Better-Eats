@@ -4,7 +4,7 @@ import Chip from '@mui/material/Chip';
 import axios from 'axios';
 import {useState} from 'react';
 
-export default function Rest({resta, setView, setDet}){
+export default function Rest({resta, setView, setClicked}){
 
   function openYelp(url) {
     window.open(url, '_blank');
@@ -14,7 +14,7 @@ export default function Rest({resta, setView, setDet}){
     e.preventDefault();
     axios.post('/yelp/details', {id: resta['id']})
     .then((res) => {
-      setDet(res.data);
+      setClicked(res.data);
       setView('resta');
     })
     .catch((err) => console.log(err));
