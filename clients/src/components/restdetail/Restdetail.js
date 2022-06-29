@@ -8,14 +8,14 @@ export default function Restdetail({resta, setView}){
   return(
    <div className="restDescription-container">
      <div><button onClick={()=>setView('map')} >Back</button></div>
-      {/* <Carousel>
+      <Carousel>
           {resta.photos?.map((photo, i) => (
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <img height='400' key={i} src={photo.large} />
+              <img height='400' key={i} src={photo} />
             </div>
           ))}
-        </Carousel> */}
-        <img className='descCoverImg' height='400' src={resta.image_url} alt="" />
+        </Carousel>
+        {/* <img className='descCoverImg' height='400' src={resta.image_url} alt="" /> */}
         <div className='restHeaderSection'>
           <div className="restName">{resta.name}</div>
            <div className = 'price-star'>{resta['price']+'  '}

@@ -49,7 +49,27 @@ example req.query = {
 }
 */
 
-// get all user info (calories, carbs, fat, protein, date)
+// get user profile (username, calories goal, uid)
+router.get('/', (req, res) => {
+  USER.find({uid: req.query.id, date: req.query.date})
+    .then((results) => {
+      res.status(200).send(results);
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    })
+});
+//axios.get('users/', {params: {date: new Date(yyyy/mm/dd)}})
+
+
+/*
+example req.query = {
+  id: 1321321,
+  date: 6/27/2022
+}
+*/
+
+// get all user nutrients info (calories, carbs, fat, protein, date)
 router.get('/info', (req, res) => {
   fetchAPI.getUserInfo(req.query, (response) => {
     res.status(200).send(response);
