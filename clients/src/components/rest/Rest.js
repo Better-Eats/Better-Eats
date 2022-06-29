@@ -28,7 +28,7 @@ export default function Rest({resta, setView, setClicked}){
         <div className="resta-name" onClick={() => openYelp(resta['url'])}>{ resta['name'] }</div>
         <div className = 'price-star'>{resta['price']+'  '}
         <StarRatings rating={resta['rating']} starRatedColor="#DA2C38"
-            numberOfStarts={5} starDimension="15px" starSpacing="1px" name='rating'/>
+            numberOfStars={5} starDimension="15px" starSpacing=".5px" name='rating'/>
         </div>
         <div>Phone: {resta['display_phone']}</div>
         <div>Address: {resta['location']['address1']}, {resta['location']['city']}</div>

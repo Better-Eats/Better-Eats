@@ -1,0 +1,50 @@
+.curcal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../assets/Profile.jpg');
+  -moz-background-size:100% 100%;
+  background-size: cover;
+  position: relative;
+  justify-content: center;
+}
+
+.test{
+  position: absolute;
+  top: 0%;
+}
+
+.container{
+  display: flex;
+  margin-top: -20%;
+}
+
+.piechart{
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.kcal{
+  position: absolute;
+  font-family: 'Poppins', 'Sans';
+  font-size: 100px;
+  right: 42.5%;
+  top: 19%;
+  color: #FFA400;
+  z-index: 1;
+}
+
+.text{
+  font-family: 'Poppins', 'Sans';
+  font-size: 50px;
+  position: absolute;
+  right: 44%;
+  top: 32%;
+  color: #2E5266;
+  z-index: 1;
+}
