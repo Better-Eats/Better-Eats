@@ -8,7 +8,7 @@ example req.body = {
   username: ji1hansol,
   goal: 2000,
   uid: 1321321
-}
+
 */
 
 // login-save user info: username, goal, uid
