@@ -80,7 +80,7 @@ export default function Location(){
           <p style={{ marginTop: '10px' }}>loading restaurants...</p>
         </div>):
         (<div className = 'yelps'>
-          {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
+          {rest.length>0? rest.map((resta) => <Rest key={resta.id} ordertype={ordertype} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
         </div>)
         }
     </div>
