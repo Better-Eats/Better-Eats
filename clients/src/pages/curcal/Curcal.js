@@ -10,6 +10,8 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 export default function Curcal(){
   const [totalCalories, setTotalCalories] = useState(0);
@@ -20,7 +22,6 @@ export default function Curcal(){
   const [currentFat, setCurrentFat] = useState(0);
   const [totalProtein, setTotalProtein] = useState(70);
   const [currentProtein, setCurrentProtein] = useState(0);
-  const [food, setFood] = useState('');
   const [topFive, setTopFive] = useState([]);
 
   const [open, setOpen] = useState(false);
@@ -33,22 +34,52 @@ export default function Curcal(){
     { name: 'Current Calories', value: currentCalories },
   ];
 
-  const addItem = (event) => {
+  const getItems = async (event) => {
     event.preventDefault();
-    axios.get('/cal', {params: {query: food, dateType: 'Branded'}})
-      .then((top5) => {
-        console.log(top5.data.foods);
-        setTopFive(top5.data.foods)
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
+    try {
+      const top5 = await axios.get('/cal', { params: { query: event.target[0].value, dateType: 'Branded'}});
+      setTopFive(top5.data.foods);
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
+  const addItem = async (fdcid) => {
+    handleClose();
+    const date = new Date()
+    date.setHours(0, 0, 0, 0);
+    const params = {
+      uid: auth.currentUser.uid,
+      fdcid: fdcid,
+      date: date.toISOString(),
+      currentTotal: {
+        calories: currentCalories,
+        carbohydrates: currentCarbs,
+        fat: currentFat,
+        protein: currentProtein
+      }
+    }
+
+    try {
+      await axios.post('/cal', params)
+      const params2 = {params: {id: auth.currentUser.uid, date: date.toISOString()}}
+      console.log('params2', params2);
+      const updatedNutrients = await axios.get('/users/info', params2);
+      setCurrentCalories(updatedNutrients.data[0].totalcal);
+      setCurrentCarbs(updatedNutrients.data[0].totalCarbs);
+      setCurrentFat(updatedNutrients.data[0].totalFat);
+      setCurrentProtein(updatedNutrients.data[0].totalProtein);
+    } catch(err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const getTotalCal = async() => {
       try {
-        const params = {params: {id: '1321321', date: '6/27/2022'}} // change this to firebase auth
+        const date = new Date()
+        date.setHours(0, 0, 0, 0);
+        const params = {params: {id: auth.currentUser?.uid, date: date.toISOString()}}
         const totalCalories = await axios.get('/users', params);
         const currentInfo = await axios.get('/users/info', params);
         setTotalCalories(totalCalories.data[0].goal);
@@ -83,6 +114,9 @@ export default function Curcal(){
             bgcolor={((currentCarbs / totalCarbs ) * 100) < 100 ? "#B7CE63" : "#DA2C38"}
             completed={Math.round((currentCarbs / totalCarbs ) * 100)}
           />
+           <div className='bartext2'>
+            {totalCarbs - currentCarbs}g left
+          </div>
         </div>
         <div className='fat'>
           <div className='bartext'>
@@ -92,6 +126,9 @@ export default function Curcal(){
             bgcolor={((currentFat / totalFat ) * 100) < 100 ? "#B7CE63" : "#DA2C38"}
             completed={Math.round((currentFat / totalFat ) * 100)}
           />
+           <div className='bartext2'>
+            {totalFat - currentFat}g left
+          </div>
         </div>
         <div className='protein'>
           <div className='bartext'>
@@ -101,6 +138,9 @@ export default function Curcal(){
            bgcolor={((currentProtein / totalProtein ) * 100) < 100 ? "#B7CE63" : "#DA2C38"}
            completed={Math.round((currentProtein / totalProtein ) * 100)}
           />
+           <div className='bartext2'>
+            {totalProtein - currentProtein}g left
+          </div>
         </div>
       </div>
       <div className='add'>
@@ -122,24 +162,21 @@ export default function Curcal(){
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 400,
+            width: 800,
+            height: 500,
             bgcolor: 'background.paper',
             border: '2px solid #000',
             boxShadow: 24,
             p: 4,
           }}
         >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Enter to search for food:
-          </Typography>
-          <form onSubmit={addItem}>
+          <form onSubmit={getItems}>
             <TextField
               id="standard-search"
               label="Search field"
               type="search"
               variant="standard"
               fullWidth
-              onInput={(e) => setFood(e.target.value)}
             />
             <Button
               variant="text"
@@ -149,10 +186,94 @@ export default function Curcal(){
             >
               Search
             </Button>
+            <div className="searchResults">
+              <h2> Food Item</h2>
+              <h2> Calories </h2>
+              <h2> Carbs </h2>
+              <h2> Fat </h2>
+              <h2> Protein </h2>
+            </div>
+            <div>
+              {topFive.map((item, index) => {
+                let obj = {}
+                obj.fdcId = item.fdcId;
+                item.foodNutrients.map(nutrient => {
+                  if (nutrient.nutrientName === "Energy") {
+                    if (nutrient.unitName.toLowerCase() ==='kj') {
+                      obj.calories = Math.round(nutrient.value / 4.18);
+                    } else {
+                      obj.calories = nutrient.value;
+                    }
+                  }
+                  if (nutrient.nutrientName === "Carbohydrate, by difference"){
+                    obj.carbs = nutrient.value;
+                  }
+                  if (nutrient.nutrientName === "Total lipid (fat)"){
+                    obj.fat = nutrient.value;
+                  }
+                  if (nutrient.nutrientName === "Protein"){
+                    obj.protein = nutrient.value;
+                  }
+                })
+                return (
+                  <div className='searchResults' key={index}
+                    onClick={() => addItem(obj.fdcId)}
+                  >
+                    <h3> {item.description} </h3>
+                    <h3> {obj.calories} KCAL </h3>
+                    <h3> {obj.carbs} g </h3>
+                    <h3> {obj.fat} g </h3>
+                    <h3> {obj.protein} g </h3>
+                  </div>
+                )
+              })}
+            </div>
+            <div className='addcustom'>
+              <h3>Add a Custom Item</h3>
+              <form>
+              <TextField
+                id="name"
+                label="Food Name"
+                size="small"
+                sx={{m:1, width: '15ch'}}
+                // value={Name}
+                // onChange={handleChange}
+              />
+              <TextField
+                id="calories"
+                label="Total Calories"
+                size="small"
+                sx={{m:1, width: '15ch'}}
+                // value={Name}
+                // onChange={handleChange}
+              />
+              <TextField
+                id="Carbs"
+                label="Total Carbs (g)"
+                size="small"
+                sx={{m:1, width: '15ch'}}
+                // value={Name}
+                // onChange={handleChange}
+              />
+              <TextField
+                id="Fat"
+                label="Total Fat (g)"
+                size="small"
+                sx={{m:1, width: '15ch'}}
+                // value={Name}
+                // onChange={handleChange}
+              />
+              <TextField
+                id="Protein"
+                label="Total Protein (g)"
+                size="small"
+                sx={{m:1, width: '15ch'}}
+                // value={Name}
+                // onChange={handleChange}
+              />
+              </form>
+            </div>
           </form>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
         </Box>
         </Modal>
       </div>

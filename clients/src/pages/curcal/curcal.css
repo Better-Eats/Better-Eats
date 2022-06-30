@@ -67,6 +67,15 @@
   align-items: center;
   font-family: 'Poppins', 'Sans';
   font-size: 40px;
+  color: #FFA400;
+}
+
+.bartext2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', 'Sans';
+  font-size: 30px;
   color: #2E5266;
 }
 
@@ -120,4 +129,32 @@
   color: #B7CE63;
   border: solid 2px white;
   background-color: white;
+}
+
+.searchResults{
+  display: grid;
+  grid-template-columns: 40% 20% 13% 13% 13%;
+  border-bottom: 0.5px solid grey;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.searchResults:hover{
+  background-color: rgb(225, 225, 225);
+}
+
+.searchResults>h3{
+  padding-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.addcustom{
+  margin-top: 20px;
+}
+
+.addcustom>h3{
+  font-size: 8px;
 }
