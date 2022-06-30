@@ -24,7 +24,14 @@ router.get('/database', (req, res) => {
   fetchAPI.addToDb((response) => {
     res.send('added to db');
   })
-})
+});
+
+router.get('/items', (req, res) => {
+  console.log('this should show');
+  menuAi.getItems((response) => {
+    res.send(response);
+  })
+});
 
 
 module.exports = router;
