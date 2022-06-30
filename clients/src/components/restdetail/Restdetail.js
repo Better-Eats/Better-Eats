@@ -17,12 +17,11 @@ export default function Restdetail({resta, setView}){
           <ArrowBackIcon />
         </IconButton>
       </div>
-      {/* MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium */}
         <div className="restName">{resta.name}</div>
         <Carousel >
           {resta.photos?.map((photo, i) => (
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <img height='350' key={i} src={photo} />
+              <img className='carouselimage' height='350' key={i} src={photo} />
             </div>
           ))}
         </Carousel>
