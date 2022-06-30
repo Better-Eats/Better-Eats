@@ -37,8 +37,6 @@
   width: 150px;
   height: 150px;
 }
-<<<<<<< HEAD
-=======
 
 .detailContainer {
   margin: auto;
@@ -131,6 +129,10 @@
 .date {
   display: flex;
   justify-content: center;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+  padding-top: 25px;
+  font-weight: 600;
+  font-size: 17px;
+  font-family: 'Poppins';
 }
->>>>>>> 12767209db7661cb330ca769adb0ef631e524475
+

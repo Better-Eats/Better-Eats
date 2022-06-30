@@ -14,11 +14,6 @@ import {auth} from '../../firebase-config.js';
 import axios from 'axios';
 import History from './History.jsx'
 
-
-
-
-
-
 export default function Profile(){
   const data = [
     {argument: 'Monday', value: 20},
@@ -65,7 +60,7 @@ export default function Profile(){
   };
 
   useEffect(() => {
-    axios.get('/users/history', {params: {id: auth.currentUser.uid, limit: 7}})
+    axios.get('/users/history', {params: {id: process.env.REACT_APP_UID, limit: 7}})
       .then((results) => {
         const goalHistory = [];
         const itemHistory = [];
@@ -76,7 +71,7 @@ export default function Profile(){
         setUserData({...userData, goalHistory: goalHistory, itemHistory: itemHistory})
       })
       .then(() => {
-        axios.get('/users', {params: {id: auth.currentUser.uid}})
+        axios.get('/users', {params: {id: process.env.REACT_APP_UID}})
           .then((results) => {
             setGoal(results.data[0].goal)
           })
