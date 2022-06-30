@@ -1,6 +1,6 @@
 import React from 'react';
 import { PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 import './curcal.css';
 
 const COLORS = ['#B7CE63', '#C8C6C6'];

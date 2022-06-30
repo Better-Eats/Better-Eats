@@ -5,13 +5,10 @@ import { auth } from '../../firebase-config.js';
 import Piechart from './Piechart.js';
 import ProgressBar from './ProgressBar.js';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 
 export default function Curcal(){
   const [totalCalories, setTotalCalories] = useState(0);
