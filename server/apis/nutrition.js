@@ -36,7 +36,7 @@ module.exports = {
 
   getUserHistory: async (data, cb) => {
     try {
-      const userH = await CAL.find({uid: Number(data.id)}, null, {limit: data.limit, sort: {date: 1}});
+      const userH = await CAL.find({uid: data.id}, null, {limit: data.limit, sort: {date: 1}});
       cb(userH);
     } catch(err) {
       console.log('error retrieving user history', err);
