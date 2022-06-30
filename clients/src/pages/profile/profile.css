@@ -9,14 +9,10 @@
 }
 
 .graph{
-  /* position: absolute; */
   margin: auto;
   width: 1000px;
-  /* height: 800px; */
-  /* width: 761px; */
-  /* height: 20%; */
-  left: 59px;
-  top: 432px;
+  /* left: 59px;
+  top: 432px; */
 }
 
 .welcome {
@@ -42,4 +38,98 @@
   border-radius: 50%;
   width: 150px;
   height: 150px;
+}
+
+.detailContainer {
+  margin: auto;
+  background-color: #E6FFFD;
+  border-radius: 5px;
+  width: 1030px;
+  height: 610px;
+  margin-top: -50px;
+}
+
+.buttons {
+  padding: 10px 15px 10px 15px;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.goalButton {
+  /* margin-right: 10px; */
+  /* position: absolute; */
+  /* width: 381px; */
+  width: 490px;
+  height: 67px;
+  left: 59px;
+  top: 734px;
+  color: white;
+  font-size: 30px;
+  border: 2px solid #B7CE63;
+  background: #B7CE63;
+  border-radius: 10px;
+}
+
+.goalButton:hover {
+  cursor: pointer;
+  color: #B7CE63;
+  border: solid 2px white;
+  background-color: white;
+}
+
+.historyButton {
+  /* position: absolute; */
+  /* width: 381px; */
+  width: 490px;
+  height: 67px;
+  left: 59px;
+  top: 734px;
+  color: white;
+  font-size: 30px;
+  border: 2px solid #B7CE63;
+  background: #B7CE63;
+  border-radius: 10px;
+}
+
+.historyButton:hover {
+  cursor: pointer;
+  color: #B7CE63;
+  border: solid 2px white;
+  background-color: white;
+}
+
+.historyContainer {
+  width: 1000px;
+  height: 500px;
+  margin: 0 10px 10px 15px;
+  background-color: white;
+  border-radius: 5px;
+  font-family: 'Poppins';
+  overflow: scroll;
+  /* box-shadow: 0 4px 2px -2px gray; */
+}
+
+.historyList {
+  max-height: 100%;
+  max-width: 100%;
+  /* flex-direction: column; */
+  /* margin: auto; */
+  /* align-items: center; */
+  padding: 10px 10px 10px 10px;
+}
+
+.items {
+  display: flex;
+  align-items: unset;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.date {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
 }
