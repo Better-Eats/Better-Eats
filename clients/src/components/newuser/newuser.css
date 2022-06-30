@@ -47,14 +47,11 @@
   border-radius: 40px;
   color: white;
   font-size: 32px;
-<<<<<<< HEAD
-  border:none;
-  margin-left: 20px;
-=======
+
   border: none;
   font-weight: bold;
   letter-spacing: -.07rem;
->>>>>>> 5860d8e3a579b37786d9c0f80c11fa79766c3a27
+
 }
 
 .form2Text {
@@ -223,11 +220,7 @@
   border-radius: 70px;
   border: 2px solid white;
   background: #B7CE63;
-<<<<<<< HEAD
-  margin-top: 20px;
-=======
   letter-spacing: -.05rem;
->>>>>>> 5860d8e3a579b37786d9c0f80c11fa79766c3a27
 }
 
 .form5Btn:hover {

@@ -4,9 +4,7 @@ import StarRatings from 'react-star-ratings';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {menuData} from './menuData.js';
-
 export default function Restdetail({resta, setView}){
-
   const distance = resta['distance']*0.000621371192;
   console.log({resta})
   return(
@@ -17,7 +15,6 @@ export default function Restdetail({resta, setView}){
           <ArrowBackIcon />
         </IconButton>
       </div>
-      {/* MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium */}
         <div className="restName">{resta.name}</div>
         <Carousel >
           {resta.photos?.map((photo, i) => (

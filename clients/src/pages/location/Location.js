@@ -72,11 +72,7 @@ export default function Location(){
             Grocery Stores
           </ToggleButton>
         </ToggleButtonGroup>
-        {/* <div><button className={ordertype === "res" ? 'resSelected' : "restaurants"} onClick={changeType} name="res">Restaurants</button></div>
-        <div><button className={ordertype === "gro" ? 'groSelected': "groceries" }  onClick={changeType} name="gro">Grocery Stores</button></div> */}
-      </div>
-      <div className = 'yelps'>
-      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} ordertype={ordertype} setClicked={setClicked}/>) : (<></>)}
+
       </div>
         {loadingMap ?
         (<div className='loadingRest'>

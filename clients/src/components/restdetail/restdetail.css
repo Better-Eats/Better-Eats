@@ -10,13 +10,11 @@
   overflow-y: auto;
   overflow-y: scroll;
 }
-
 img{
   border-radius: 5px;
   -webkit-box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.47);
   box-shadow: 5px 5px 8px -3px rgba(0,0,0,0.47);
 }
-
 .descCoverImg{
   object-fit: cover;
 }
@@ -25,13 +23,11 @@ img{
   font-family: 'Poppins', 'Sans';
   text-align: center;
 }
-
 .restHeaderSection{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .menu-container{
   width: 85%;
   display: flex;
@@ -39,46 +35,38 @@ img{
   flex-wrap: wrap;
   align-self: center;
 }
-
 .menu-card{
   padding-bottom: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.077);
   width: 28.2%;
   border-radius: 5px;
 }
-
 .menu-img{
   width: 100%;
   height: 180px;
   object-fit: cover;
   border-radius: 5px 5px 0px 0px;
 }
-
 .menu-desc{
   padding: 0px 10px 10px 10px;
 }
-
 .menu-title{
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-bottom: 5px;
 }
-
 .menu-title>div:nth-of-type(1) {
   font-size: 25px;
   font-weight: bold;
 }
-
 .menu-title>div:nth-of-type(2) {
   font-size: 17px;
   padding-right: 5px;
 }
-
 .menu-top{
   position: relative;
 }
-
 .addBtn{
   width: 60px;
   height: 30px;
@@ -92,27 +80,22 @@ img{
   font-size: 18px;
   font-weight: bold;
   box-shadow: 2px 4px 0px rgba(0, 0, 0, 0.417);
-
 }
-
 .addBtn:hover{
   background-color: white;
   color: #DA2C38;
 }
-
 .ingredients-cont{
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   padding-top: 7px;
 }
-
 .ingredient{
   padding: 4px 10px;
   border-radius: 20px;
   background-color: rgba(128, 128, 128, 0.151);
 }
-
 .nut-grid{
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
@@ -120,15 +103,12 @@ img{
   text-align: center;
   color:rgb(95, 95, 95);
 }
-
 .menu-na{
   font-size: 15px;
   text-decoration: underline;
 }
-
 .menu-calories{
   padding-top: 2px;
   font-size: 13px;
   padding-bottom: 5px;
 }
-
