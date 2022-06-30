@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 
+
 export default function Curcal(){
   const [totalCalories, setTotalCalories] = useState(0);
   const [currentCalories, setCurrentCalories] = useState(0);

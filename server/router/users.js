@@ -15,6 +15,7 @@ example req.body = {
 router.post('/newUser', async (req, res) => {
   const newUser = new USER(req.body)
   try {
+
    const savedU = await newUser.save();
    const newDoc = await new CAL({uid: savedU.uid, date: savedU.date});
    const savedDoc = await newDoc.save();
@@ -24,6 +25,26 @@ router.post('/newUser', async (req, res) => {
   }
 });
 
+
+router.post('/findUser', async (req, res) => {
+  try{
+    const isFound = await USER.find({uid:req.body.uid});
+
+    if(isFound.length === 0){
+      const newUser = new USER(req.body)
+      try {
+        const savedDoc = await newUser.save();
+        res.status(201).send(savedDoc)
+      } catch(err){
+        console.log(err)
+      }
+    }else{
+      res.status(201).send(false);
+    }
+  }catch(err){
+    res.status(500).send(err);
+  }
+});
 /*
 example req.body = {
   uid: 1321321
@@ -97,4 +118,15 @@ router.put('/', (req, res) => {
     })
 })
 
+
+//update user
+router.post('/update',async (req,res)=>{
+  const id = req.body.uid
+  try{
+    const result= await USER.findOneAndUpdate({uid:id},req.body);
+    res.status(201).send(result.data);
+  }catch(err){
+    res.status(500).send(err)
+  }
+})
 module.exports=router;

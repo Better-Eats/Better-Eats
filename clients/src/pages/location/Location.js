@@ -8,6 +8,8 @@ import axios from 'axios';
 import Restdetail from '../../components/restdetail/Restdetail.js';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Grodetail from '../../components/grodetail/Grodetail.js'
+
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Location(){
@@ -24,6 +26,7 @@ export default function Location(){
     setLoadingRest(true)
     setLoadingMap(true)
     navigator.geolocation.getCurrentPosition((data) => {
+      // console.log(data)
       setCoordinates({ lat: data.coords.latitude, lng: data.coords.longitude })
     })
   }, [])
@@ -69,6 +72,7 @@ export default function Location(){
             Grocery Stores
           </ToggleButton>
         </ToggleButtonGroup>
+
       </div>
         {loadingMap ?
         (<div className='loadingRest'>
@@ -126,7 +130,7 @@ export default function Location(){
           </GoogleMapReact>)
           }
         </div>
-      </div> : <Restdetail resta={clicked} setView={setView}/>}
+      </div> : view=== 'res' ? <Restdetail resta={clicked} setView={setView}/> : <Grodetail resta={clicked} setView={setView}/>}
 
     </div>
   )

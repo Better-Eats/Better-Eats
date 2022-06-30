@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
 
   uid: {
     type: String
-  }
+  },
 }, {timestamp: true});
 
 module.exports = mongoose.model('user', userSchema);
