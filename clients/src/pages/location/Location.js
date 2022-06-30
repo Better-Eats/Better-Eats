@@ -20,6 +20,7 @@ export default function Location(){
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((data) => {
+      // console.log(data)
       setCoordinates({ lat: data.coords.latitude, lng: data.coords.longitude })
     })
   }, [])
@@ -65,7 +66,7 @@ export default function Location(){
         <div><button className={ordertype === "gro" ? 'groSelected': "groceries" }  onClick={changeType} name="gro">Grocery Stores</button></div> */}
       </div>
       <div className = 'yelps'>
-        {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
+      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
       </div>
     </div>
     {view ==='map'? <div className = 'map'>
@@ -84,28 +85,28 @@ export default function Location(){
           </div>
         </div>
         <div className='Googlemap'>
-          <GoogleMapReact
-            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
-            defaultCenter={coordinates}
-            center={coordinates}
-            defaultZoom={14}
-            margin={[50, 50, 50, 50]}
-            options={''}
-            onChange={(e) => {
-              setCoordinates({ lat: e.center.lat, lng: e.center.lng })
-              setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
-            }}
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
+          defaultCenter={coordinates}
+          center={coordinates}
+          defaultZoom={14}
+          margin={[50, 50, 50, 50]}
+          options={''}
+          onChange={(e) => {
+            setCoordinates({ lat: e.center.lat, lng: e.center.lng })
+            setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
+          }}
+        >
+        {rest?.map((place, i) => (
+          <div
+            lat={Number(place.coordinates.latitude)}
+            lng={Number(place.coordinates.longitude)}
+            key={i}
           >
-          {rest?.map((place, i) => (
-            <div
-              lat={Number(place.coordinates.latitude)}
-              lng={Number(place.coordinates.longitude)}
-              key={i}
-            >
-              <LocationOnIcon style={{ color: '#DA2C38'}} fontSize="large" />
-            </div>
-          ))}
-          </GoogleMapReact>
+            <LocationOnIcon style={{ color: '#DA2C38'}} fontSize="large" />
+          </div>
+        ))}
+        </GoogleMapReact>
         </div>
       </div> : <Restdetail resta={clicked} setView={setView}/>}
 

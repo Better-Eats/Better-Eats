@@ -36,14 +36,19 @@
   color:#2E5266;
 }
 
+.form1Btns{
+  display: flex;
+}
+
 .form1Btn{
-  width: 371px;
+  width: 300px;
   height: 64px;
   background: #B7CE63;
   border-radius: 40px;
   color: white;
   font-size: 32px;
   border:none;
+  margin-left: 20px;
 }
 
 .form2Text {
@@ -193,7 +198,10 @@
     padding-top: 0px;
     padding-bottom: 10px;
 }
-
+.form5Input{
+  width: 350px;
+  height: 80px;
+}
 .form5Btn {
   display: flex;
   align-items: center;
@@ -207,6 +215,7 @@
   border-radius: 70px;
   border: 2px solid white;
   background: #B7CE63;
+  margin-top: 20px;
 }
 
 .form5Btn:hover {

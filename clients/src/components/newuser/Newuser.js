@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { Link} from 'react-router-dom';
-
+import axios from 'axios';
 export default function Newuser(){
  const [curPage, setCurPage] = useState(1);
  const [username, setUsername] = useState(auth.currentUser.displayName);
@@ -47,14 +47,24 @@ const buttons2 = [
   }
   setCalorie(cal.toFixed());
  }
- console.log('age', age, 'weight', weight, 'height', height, 'gender', gender);
+
+  const submit = async() =>{
+    try{
+      const newDate = new Date();
+      console.log('newdata', new Date());
+      axios.post('/users/update', {uid: auth.currentUser.uid, username, goal: calorie, date: newDate})
+    }catch(err){
+      console.log(err)
+    }
+  }
 
  const renderView=()=>{
   switch (curPage){
     case 1:
       return (<form className="form">
         <div className="form1Text">Let's get started! A few questions to customize your Better Eats plan.</div>
-        <div><button className="form1Btn" onClick={()=>setCurPage(curPage+1)}>Continue</button></div>
+        <div className="form1Btns"><button className="form1Btn" onClick={()=>setCurPage(curPage+1)}>Continue</button>
+        <button className="form1Btn" onClick={()=>setCurPage(curPage+5)}>Skip the survey</button></div>
       </form>);
     case 2:
       return (
@@ -99,10 +109,10 @@ const buttons2 = [
               <label>Female</label>
             </div>
             <label className="form3Label">How tall are you? (optional)</label>
-            <TextField id="standard-basic" onChange={(e)=>setHeight({...height, ft:e.target.value})} label="ft" variant="standard" />
-            <TextField id="standard-basic" onChange={(e)=>setHeight({...height, in:e.target.value})} label="in" variant="standard" />
+            <TextField id="standard-basic" onChange={(e)=>setHeight({...height, ft:e.target.value})} label="ft" variant="standard" required/>
+            <TextField id="standard-basic" onChange={(e)=>setHeight({...height, in:e.target.value})} label="in" variant="standard" required/>
             <label>How much do you weight? (optional)</label>
-            <TextField id="standard-basic" onChange={(e)=>setWeight(e.target.value)} label="Lbs" variant="standard" />
+            <TextField id="standard-basic" onChange={(e)=>setWeight(e.target.value)} label="Lbs" variant="standard" required />
             <label>What is your age?</label>
             <div className="form3Btns">
             <ButtonGroup onClick={(e)=> setAge(e.target.name)} size="large" aria-label="large button group">
@@ -146,9 +156,19 @@ const buttons2 = [
                 {calorie} Calories
                 </label>
                 <Link to="/curcal" style={{textDecoration:"none"}}>
-                  <button className="form5Btn" >Go To Dashboard</button>
+                  <button onClick={submit}className="form5Btn" >Go To Dashboard</button>
                 </Link>
               </div>
+            </form>
+          )
+          case 6:
+          return (
+            <form className="form">
+              <div className="form1Text">Set your own daily calorie goal</div>
+              <TextField className="form5Input"onChange={(e)=>setCalorie(e.target.value)} id="outlined-basic" label="Calorie goal"  variant="outlined" type="number" required/>
+              <Link to="/curcal" style={{textDecoration:"none"}}>
+                  <button onClick={submit} className="form5Btn" >Go To Dashboard</button>
+                </Link>
             </form>
           )
     default:
