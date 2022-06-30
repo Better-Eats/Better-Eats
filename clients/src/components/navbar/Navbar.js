@@ -20,7 +20,7 @@ export default function NavBar({isAuth, setIsAuth}) {
     <div className="navbarContainer">
       <div className="navbarLeft" >  </div>
       <div className="navbarCenter">
-        <Link to="/" style={{textDecoration:"none"}}>
+        <Link to="/curcal" style={{textDecoration:"none"}}>
           <img className="logoImg" src={logo} alt=""/>
         </Link>
       </div>

@@ -41,6 +41,7 @@
   border: 2px solid #B7CE63;
   background: #B7CE63;
   border-radius: 40px;
+  letter-spacing: -.07rem;
 }
 
 .homeBtn:hover{
