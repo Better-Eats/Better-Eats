@@ -20,9 +20,11 @@ export default function NavBar({isAuth, setIsAuth}) {
     <div className="navbarContainer">
       <div className="navbarLeft" >  </div>
       <div className="navbarCenter">
-        <Link to="/" style={{textDecoration:"none"}}>
+       {isAuth ? <Link to="/curcal" style={{textDecoration:"none"}}>
           <img className="logoImg" src={logo} alt=""/>
-        </Link>
+        </Link> : <Link to="/" style={{textDecoration:"none"}}>
+          <img className="logoImg" src={logo} alt=""/>
+        </Link>}
       </div>
     <div className="navbarRight">
       {isAuth? <div className="navIcons">
@@ -33,8 +35,9 @@ export default function NavBar({isAuth, setIsAuth}) {
       <Link to="/profile" style={{textDecoration:"none"}}>
       <PersonIcon className="navIcon" />
       </Link>
+      <Link to="/cart" style={{textDecoration:"none"}}>
       <ShoppingCartIcon className="navIcon"/>
-
+      </Link>
       <LogoutIcon className="navIcon" onClick={signUserOut}/>
       </div> : <></>}
     </div>

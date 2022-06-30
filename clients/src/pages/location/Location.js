@@ -8,6 +8,7 @@ import axios from 'axios';
 import Restdetail from '../../components/restdetail/Restdetail.js';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Grodetail from '../../components/grodetail/Grodetail.js'
 
 
 export default function Location(){
@@ -66,7 +67,7 @@ export default function Location(){
         <div><button className={ordertype === "gro" ? 'groSelected': "groceries" }  onClick={changeType} name="gro">Grocery Stores</button></div> */}
       </div>
       <div className = 'yelps'>
-      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
+      {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} ordertype={ordertype} setClicked={setClicked}/>) : (<></>)}
       </div>
     </div>
     {view ==='map'? <div className = 'map'>
@@ -108,7 +109,7 @@ export default function Location(){
         ))}
         </GoogleMapReact>
         </div>
-      </div> : <Restdetail resta={clicked} setView={setView}/>}
+      </div> : view=== 'res' ? <Restdetail resta={clicked} setView={setView}/> : <Grodetail resta={clicked} setView={setView}/>}
 
     </div>
   )
