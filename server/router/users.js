@@ -89,4 +89,12 @@ router.get('/history', (req, res) => {
   });
 });
 
+router.put('/', (req, res) => {
+  // console.log(req.body);
+  USER.findOneAndUpdate({uid: req.body.uid}, {goal: req.body.goal})
+    .then((results) => {
+      res.status(201).send(results);
+    })
+})
+
 module.exports=router;

@@ -64,6 +64,13 @@ export default function Profile(){
   const handleHistoryClick = (e) => {
     setCurrentDisplay('history');
   };
+
+  const handleEditClick =(e) => {
+    axios.put('/users', {uid: auth.currentUser.uid, goal: 2000})
+      .then((res) => {
+        console.log(res);
+      })
+  }
   // current Goal, number, edit
   // process.env.REACT_APP_UID
 
@@ -116,6 +123,7 @@ export default function Profile(){
             <button className='historyButton' onClick={handleHistoryClick}>
               Item history
             </button>
+            <button onClick={handleEditClick}>Test</button>
           </div>
         </div>
         {currentDisplay === 'graph' ?
