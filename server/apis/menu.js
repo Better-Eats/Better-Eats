@@ -41,7 +41,10 @@ module.exports = {
   },
 
   getAll: (cb) => {
-
+    MENU.aggregate([{$sample: {size: 25}}])
+      .then((results) => {
+        cb(results);
+      })
   }
 }
 
