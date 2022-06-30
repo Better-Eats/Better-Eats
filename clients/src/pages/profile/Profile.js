@@ -1,20 +1,19 @@
 import './profile.css';
 import {useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
-import {
-  Chart,
-  ArgumentAxis,
-  ValueAxis,
-  BarSeries,
-  SplineSeries,
-  Legend,
-} from '@devexpress/dx-react-chart-material-ui';
+// import {
+//   Chart,
+//   ArgumentAxis,
+//   ValueAxis,
+//   BarSeries,
+//   SplineSeries,
+//   Legend,
+// } from '@devexpress/dx-react-chart-material-ui';
 import { ValueScale, Animation } from '@devexpress/dx-react-chart';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {auth} from '../../firebase-config.js';
 import axios from 'axios';
-
-
-
+import History from './History.jsx';
 
 
 export default function Profile(){
@@ -23,61 +22,159 @@ export default function Profile(){
     {argument: 'Tuesday', value: 30},
     {argument: 'Wednesday', value: 40},
   ];
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({
+    goalHistory: [],
+    itemHistory: [],
+    goal: 0
+  });
+  const [goal, setGoal] = useState(0);
+  const [currentDisplay, setCurrentDisplay] = useState('graph');
 
+  // const handleTest = (e) => {
+  //   const data = {username: 'josh', goal: 100, uid: auth.currentUser.uid};
+  //   axios.post('/users/newUser', data)
+  //   .then((res) => {
+  //     console.log(res);
+  //   })
+  //   .catch((err) => {
+  //     console.log('error posting', err);
+  //   })
+  // }
 
+  // const [entry, setEntry] = useState('');
+  // const handleChange = (e) => {
+  //   setEntry(e.target.value);
+  // }
+  // const handleClick = (e) => {
+  //   axios.get('/cal', {params: {query: entry, dataType: 'Branded'}})
+  //     .then((results) => {
+  //       const itemId = results.data.foods[0].fdcId;
+  //       axios.post('/cal', {uid: auth.currentUser.uid, currentTotal: {calories: 0, carbohydrates: 0, fat: 0, protein: 0}, date: '6/22/2022', fdcid: itemId, id: itemId})
+  //         .then((res) => {
+  //           console.log(res);
+  //         })
+  //     })
+  // }
 
-//1321321 uid
-//limit :7
+  const handleGoalClick = (e) => {
+    setCurrentDisplay('graph');
+    console.log(userData.goalHistory)
+  };
+
+  const handleHistoryClick = (e) => {
+    setCurrentDisplay('history');
+  };
+
+  const handleEditClick =(e) => {
+    axios.put('/users', {uid: auth.currentUser.uid, goal: 2000})
+      .then((res) => {
+        console.log(res);
+      })
+  }
+  // current Goal, number, edit
+  // process.env.REACT_APP_UID
+
   useEffect(() => {
-    axios.get('/users/history', {params: {id: 1321321, limit: 7}})
+    axios.get('/users', {params: {id: auth.currentUser.uid}})
+    .then((results) => {
+      setGoal(results.data[0].goal)
+      return results.data[0].goal
+    })
+    .then((goal) => {
+      axios.get('/users/history', {params: {id: auth.currentUser.uid, limit: 7}})
       .then((results) => {
-        const history = [];
-        console.log(results.data);
+        const goalHistory = [];
+        const itemHistory = [];
+        const dates = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         results.data.forEach((item) => {
-          history.push({argument: item.date, value: item.totalcal + Math.random(1) * 100})
+          let over = 0;
+          let calories = item.totalcal;
+          if (calories > goal) {
+            over = calories - goal;
+            calories = calories - over;
+          }
+          goalHistory.push({name: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), calories: calories, over: over + Math.random(1) * 100, amt:200});
+          itemHistory.push({date: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), items: item.items});
         })
-        setUserData(history);
+        setUserData({...userData, goalHistory: goalHistory, itemHistory: itemHistory})
       })
-      .then(() => {
-        console.log('this is userdata', userData);
-      })
+    })
+    .catch((err) => {
+        console.log('error getting data', err);
+    })
   }, [])
+
 
 
   return (
     <div className='profile'>
-      <button onClick={() => {console.log(auth.currentUser)}}>test</button>
       <div className='picture'>
           <img className='innerPicture' src={auth.currentUser.photoURL} alt="prop"></img>
       </div>
       <div className='welcome'>
         Welcome, {auth.currentUser.displayName}
       </div>
-      <div>
+      <div className='detailContainer'>
         <div>
-          <div>
-            <button>
-              goal history
+          <div className='buttons'>
+            <button className='goalButton' onClick={handleGoalClick}>
+              See past 7 days
             </button>
-            <button>
-              item history
+            <button className='historyButton' onClick={handleHistoryClick}>
+              Item history
             </button>
+            <button onClick={handleEditClick}>Test</button>
           </div>
-
         </div>
+        {currentDisplay === 'graph' ?
         <div className='graph'>
-          <Paper>
-            <Chart data={userData}>
-              <ArgumentAxis />
-              <ValueAxis />
-              <BarSeries valueField='value' argumentField='argument'  />
-              <Animation />
-            </Chart>
-          </Paper>
-        </div>
+          <BarChart
+            barSize={100}
+            width={1000}
+            height={500}
+            data={userData.goalHistory}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 10,
+              bottom: 5
+            }} >
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey="name" />
+            <YAxis unit={'cal'} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="calories" stackId="a" fill="#B7CE63" />
+            <Bar dataKey="over" stackId="a" fill="#DA2C38" />
+          </BarChart>
+        </div> :
+        <div className="historyContainer">
+          {userData.itemHistory.map((item, index) =>
+           <History item={item} key={index}/>
+          )}
+          </div>
+          }
       </div>
     </div>
-
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
