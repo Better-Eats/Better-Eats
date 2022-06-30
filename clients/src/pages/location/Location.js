@@ -10,6 +10,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Grodetail from '../../components/grodetail/Grodetail.js'
 
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Location(){
   const [rest, setRest] = useState([]);
@@ -18,8 +19,12 @@ export default function Location(){
   const [ordertype, setOrdertype] = useState('res');
   const [bounds, setBounds] = useState(null);
   const [coordinates, setCoordinates] = useState({});
+  const [loadingMap, setLoadingMap] = useState(true);
+  const [loadingRest, setLoadingRest] = useState(true);
 
   useEffect(() => {
+    setLoadingRest(true)
+    setLoadingMap(true)
     navigator.geolocation.getCurrentPosition((data) => {
       // console.log(data)
       setCoordinates({ lat: data.coords.latitude, lng: data.coords.longitude })
@@ -31,6 +36,8 @@ export default function Location(){
       try{
         const res = await axios.post('/yelp', {coordinates: coordinates , ordertype: ordertype});
         // console.log(res.data.businesses,'rest list')
+        setLoadingMap(false)
+        setLoadingRest(false)
         setRest(res.data.businesses);
       }catch(err){
         console.log(err)
@@ -43,7 +50,9 @@ export default function Location(){
     e.preventDefault();
     setOrdertype(e.target.name);
     axios.post('/yelp', {coordinates, ordertype: e.target.name})
-    .then((res) => setRest(res.data.businesses))
+    .then((res) => {
+      setRest(res.data.businesses)
+    })
     .catch((err) => console.log(err));
   }
   console.log('detailed', clicked);
@@ -69,6 +78,15 @@ export default function Location(){
       <div className = 'yelps'>
       {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} ordertype={ordertype} setClicked={setClicked}/>) : (<></>)}
       </div>
+        {loadingMap ?
+        (<div className='loadingRest'>
+          <CircularProgress size="10rem" />
+          <p style={{ marginTop: '10px' }}>loading restaurants...</p>
+        </div>):
+        (<div className = 'yelps'>
+          {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
+        </div>)
+        }
     </div>
     {view ==='map'? <div className = 'map'>
         <div className="LogoSearch">
@@ -86,28 +104,35 @@ export default function Location(){
           </div>
         </div>
         <div className='Googlemap'>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
-          defaultCenter={coordinates}
-          center={coordinates}
-          defaultZoom={14}
-          margin={[50, 50, 50, 50]}
-          options={''}
-          onChange={(e) => {
-            setCoordinates({ lat: e.center.lat, lng: e.center.lng })
-            setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
-          }}
-        >
-        {rest?.map((place, i) => (
-          <div
-            lat={Number(place.coordinates.latitude)}
-            lng={Number(place.coordinates.longitude)}
-            key={i}
-          >
-            <LocationOnIcon style={{ color: '#DA2C38'}} fontSize="large" />
+          {loadingMap ?
+          <div className='loadingMap'>
+            <CircularProgress size="13rem"/>
+            <p style={{marginTop:'10px'}}>loading map...</p>
           </div>
-        ))}
-        </GoogleMapReact>
+          :
+          (<GoogleMapReact
+            bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_TOKEN }}
+            defaultCenter={coordinates}
+            center={coordinates}
+            defaultZoom={14}
+            margin={[50, 50, 50, 50]}
+            options={''}
+            onChange={(e) => {
+              setCoordinates({ lat: e.center.lat, lng: e.center.lng })
+              setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw })
+            }}
+          >
+          {rest?.map((place, i) => (
+            <div
+              lat={Number(place.coordinates.latitude)}
+              lng={Number(place.coordinates.longitude)}
+              key={i}
+            >
+              <LocationOnIcon style={{ color: '#DA2C38'}} fontSize="large" />
+            </div>
+          ))}
+          </GoogleMapReact>)
+          }
         </div>
       </div> : view=== 'res' ? <Restdetail resta={clicked} setView={setView}/> : <Grodetail resta={clicked} setView={setView}/>}
 

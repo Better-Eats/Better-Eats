@@ -47,8 +47,14 @@
   border-radius: 40px;
   color: white;
   font-size: 32px;
+<<<<<<< HEAD
   border:none;
   margin-left: 20px;
+=======
+  border: none;
+  font-weight: bold;
+  letter-spacing: -.07rem;
+>>>>>>> 5860d8e3a579b37786d9c0f80c11fa79766c3a27
 }
 
 .form2Text {
@@ -59,11 +65,11 @@
 }
 .form2label{
   font-family: "Poppins", "Sans";
-    font-weight: 500;
-    font-size: 33px;
-    color: #2E5266;
-    padding-top: 0px;
-    padding-bottom: 10px;
+  font-weight: 300;
+  font-size: 33px;
+  color: #2E5266;
+  padding-top: 0px;
+  padding-bottom: 10px;
 }
 .nu-input{
   border: none;
@@ -97,6 +103,7 @@
     border-radius: 40px;
     border: 2px solid white;
     background: #B7CE63;
+    letter-spacing: -.05rem;
 }
 .form2Btn:hover{
   cursor: pointer;
@@ -165,6 +172,7 @@
   border-radius: 70px;
   border: 2px solid white;
   background: #B7CE63;
+  letter-spacing: -.05rem;
 }
 
 .form4Btn:hover{
@@ -215,7 +223,11 @@
   border-radius: 70px;
   border: 2px solid white;
   background: #B7CE63;
+<<<<<<< HEAD
   margin-top: 20px;
+=======
+  letter-spacing: -.05rem;
+>>>>>>> 5860d8e3a579b37786d9c0f80c11fa79766c3a27
 }
 
 .form5Btn:hover {
