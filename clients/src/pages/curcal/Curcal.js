@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './curcal.css'
-<<<<<<< HEAD
-import {useNavigate} from 'react-router-dom';
-export default function Curcal(){
-  let navigate = useNavigate();
-  return (
-    <div className ='curcal'>
-      current cal page
-      <button onClick={() => {navigate('/profile')}}>navigate</button>
-    </div>
-  )
-=======
 import { auth } from '../../firebase-config.js';
 import { PureComponent } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
@@ -63,6 +52,5 @@ export default class Curcal extends PureComponent {
       </div>
     );
   }
->>>>>>> ce0a3e0fcd698d83494cfa1d55dce6d62b9e107a
 }
 

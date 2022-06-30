@@ -11,12 +11,13 @@
   /* position: absolute; */
   margin: auto;
   width: 1000px;
-  height: 700px;
+  /* height: 800px; */
   /* width: 761px; */
   /* height: 20%; */
   left: 59px;
   top: 432px;
 }
+
 .welcome {
   margin: auto;
   font-size: 60px;
@@ -32,29 +33,11 @@
   width: 170px;
   height: 170px;
   background-color: #2E5266;
+
 }
+
 .innerPicture {
   border-radius: 50%;
   width: 150px;
-  height: auto;
+  height: 150px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
