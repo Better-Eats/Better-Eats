@@ -19,6 +19,8 @@
   font-size: 60px;
   margin-top: -20px;
   font-family: 'Poppins';
+  color: #2E5266;
+  letter-spacing: -0.07em;
 }
 .picture {
   display: flex;
@@ -40,18 +42,20 @@
 
 .detailContainer {
   margin: auto;
-  background-color: #E6FFFD;
-  border-radius: 5px;
+  background-color: #FAFDFF;
+  /* background-color: white; */
+  border-radius: 15px;
   width: 1030px;
   height: 610px;
   margin-top: -50px;
+  box-shadow: 5px 5px 20px grey;
+
 }
 
 .buttons {
-  padding: 10px 15px 10px 15px;
+  padding: 30px 15px 10px 15px;
   display: flex;
   justify-content: space-between;
-
 }
 
 .goalButton {
@@ -67,6 +71,8 @@
   border: 2px solid #B7CE63;
   background: #B7CE63;
   border-radius: 10px;
+  letter-spacing: -0.07em;
+  font-weight: bold;
 }
 
 .goalButton:hover {
@@ -74,6 +80,10 @@
   color: #B7CE63;
   border: solid 2px white;
   background-color: white;
+  letter-spacing: -0.07em;
+  font-weight: bold;
+
+
 }
 
 .historyButton {
@@ -88,6 +98,9 @@
   border: 2px solid #B7CE63;
   background: #B7CE63;
   border-radius: 10px;
+  letter-spacing: -0.07em;
+  font-weight: bold;
+
 }
 
 .historyButton:hover {
@@ -95,6 +108,9 @@
   color: #B7CE63;
   border: solid 2px white;
   background-color: white;
+  letter-spacing: -0.07em;
+  font-weight: bold;
+
 }
 
 .historyContainer {

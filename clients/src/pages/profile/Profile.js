@@ -1,18 +1,20 @@
 import './profile.css';
 import {useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
-import {
-  Chart,
-  ArgumentAxis,
-  ValueAxis,
-  BarSeries,
-  SplineSeries,
-  Legend,
-} from '@devexpress/dx-react-chart-material-ui';
+// import {
+//   Chart,
+//   ArgumentAxis,
+//   ValueAxis,
+//   BarSeries,
+//   SplineSeries,
+//   Legend,
+// } from '@devexpress/dx-react-chart-material-ui';
 import { ValueScale, Animation } from '@devexpress/dx-react-chart';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {auth} from '../../firebase-config.js';
 import axios from 'axios';
-import History from './History.jsx'
+import History from './History.jsx';
+
 
 export default function Profile(){
   const data = [
@@ -39,12 +41,15 @@ export default function Profile(){
   //   })
   // }
 
-
+  // const [entry, setEntry] = useState('');
+  // const handleChange = (e) => {
+  //   setEntry(e.target.value);
+  // }
   // const handleClick = (e) => {
   //   axios.get('/cal', {params: {query: entry, dataType: 'Branded'}})
   //     .then((results) => {
   //       const itemId = results.data.foods[0].fdcId;
-  //       axios.post('/cal', {uid: auth.currentUser.uid, currentTotal: {calories: 0, carbohydrates: 0, fat: 0, protein: 0}, date: '6/28/2022', fdcid: itemId, id: itemId})
+  //       axios.post('/cal', {uid: auth.currentUser.uid, currentTotal: {calories: 0, carbohydrates: 0, fat: 0, protein: 0}, date: '6/22/2022', fdcid: itemId, id: itemId})
   //         .then((res) => {
   //           console.log(res);
   //         })
@@ -53,32 +58,43 @@ export default function Profile(){
 
   const handleGoalClick = (e) => {
     setCurrentDisplay('graph');
+    console.log(userData.goalHistory)
   };
 
   const handleHistoryClick = (e) => {
     setCurrentDisplay('history');
   };
+  // current Goal, number, edit
+  // process.env.REACT_APP_UID
 
   useEffect(() => {
-    axios.get('/users/history', {params: {id: process.env.REACT_APP_UID, limit: 7}})
+    axios.get('/users', {params: {id: auth.currentUser.uid}})
+    .then((results) => {
+      setGoal(results.data[0].goal)
+      return results.data[0].goal
+    })
+    .then((goal) => {
+      axios.get('/users/history', {params: {id: auth.currentUser.uid, limit: 7}})
       .then((results) => {
         const goalHistory = [];
         const itemHistory = [];
+        const dates = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         results.data.forEach((item) => {
-          goalHistory.push({argument: item.date, value: item.totalcal + Math.random(1) * 100});
-          itemHistory.push({date: item.date, items: item.items});
+          let over = 0;
+          let calories = item.totalcal;
+          if (calories > goal) {
+            over = calories - goal;
+            calories = calories - over;
+          }
+          goalHistory.push({name: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), calories: calories, over: over + Math.random(1) * 100, amt:200});
+          itemHistory.push({date: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), items: item.items});
         })
         setUserData({...userData, goalHistory: goalHistory, itemHistory: itemHistory})
       })
-      .then(() => {
-        axios.get('/users', {params: {id: process.env.REACT_APP_UID}})
-          .then((results) => {
-            setGoal(results.data[0].goal)
-          })
-      })
-      .catch((err) => {
+    })
+    .catch((err) => {
         console.log('error getting data', err);
-      })
+    })
   }, [])
 
 
@@ -95,24 +111,34 @@ export default function Profile(){
         <div>
           <div className='buttons'>
             <button className='goalButton' onClick={handleGoalClick}>
-              goal history
+              See past 7 days
             </button>
             <button className='historyButton' onClick={handleHistoryClick}>
-              item history
+              Item history
             </button>
-            {/* <button onClick={handleTest}>add user</button> */}
           </div>
         </div>
         {currentDisplay === 'graph' ?
         <div className='graph'>
-          <Paper>
-            <Chart data={userData.goalHistory} >
-              <ArgumentAxis />
-              <ValueAxis />
-              <BarSeries valueField='value' argumentField='argument'   />
-              <Animation />
-            </Chart>
-          </Paper>
+          <BarChart
+            barSize={100}
+            width={1000}
+            height={500}
+            data={userData.goalHistory}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 10,
+              bottom: 5
+            }} >
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey="name" />
+            <YAxis unit={'cal'} />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="calories" stackId="a" fill="#B7CE63" />
+            <Bar dataKey="over" stackId="a" fill="#DA2C38" />
+          </BarChart>
         </div> :
         <div className="historyContainer">
           {userData.itemHistory.map((item, index) =>
