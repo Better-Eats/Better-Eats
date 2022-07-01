@@ -14,7 +14,7 @@ app.use('/yelp', router.yelp);
 app.use('/cal', router.cal);
 app.use('/menu', router.menu);
 // app.use('/forum', router.forum)
-
+app.use('/cart', router.cart);
 
 // place an order
 

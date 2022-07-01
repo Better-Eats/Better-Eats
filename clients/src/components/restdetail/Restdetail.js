@@ -4,9 +4,22 @@ import StarRatings from 'react-star-ratings';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {menuData} from './menuData.js';
+import axios from 'axios';
+import {auth} from '../../firebase-config.js';
+
 export default function Restdetail({resta, setView}){
   const distance = resta['distance']*0.000621371192;
   console.log({resta})
+  const addCart = async(e, order) =>{
+    e.preventDefault()
+    try{
+      const res = await axios.post('/cart', {uid: auth.currentUser.email, order});
+      console.log(res.data);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
   return(
    <div className="restDescription-container">
      <div>
@@ -19,7 +32,7 @@ export default function Restdetail({resta, setView}){
         <Carousel >
           {resta.photos?.map((photo, i) => (
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <img className='carouselimage' height='350' key={i} src={photo} />
+              <img className='carouselimage' height='350' key={i} src={photo} alt="" />
             </div>
           ))}
         </Carousel>
@@ -40,7 +53,7 @@ export default function Restdetail({resta, setView}){
           <>
           <div className='menu-card'>
             <div className='menu-top'>
-                <button className="addBtn" >
+                <button className="addBtn" onClick={(e)=>addCart(e, menu)} >
                 Add
               </button>
               <img className='menu-img' src={menu.image} alt=''/>

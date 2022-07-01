@@ -14,7 +14,6 @@ import Cart from './components/cart/Cart.js';
 function App() {
 
   const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
-
   return (
     <Router>
       <NavBar isAuth={isAuth} setIsAuth={setIsAuth} />

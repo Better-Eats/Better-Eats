@@ -1,10 +1,20 @@
 import './grodetail.css';
 import Carousel from 'react-material-ui-carousel'
+import axios from 'axios';
+import {auth} from '../../firebase-config.js';
 
 export default function Grodetail({resta, setView}){
   const pseudo = [{"name": "tomato", "calories": 400, "image": resta.photos[0],'fat':5, 'carbohydrates':7, 'protein':6.8,'dietLabel':'keto plan', 'price': 8}, {"name": "potato", "calories": 450, "image": resta.photos[1],'fat':4, 'carbohydrates':9.8, 'protein':5.4,'dietLabel':'carb baby', 'price': 8}, {"name": "mushroom", "calories": 380, "image": resta.photos[0],'fat':3.5, 'carbohydrates':20, 'protein':64,'dietLabel':'all meat plan', 'price': 8},{"name": "fish", "calories": 218, "image": resta.photos[2],'fat':5.5, 'carbohydrates':9.12, 'protein':2.8,'dietLabel':'food forbidden', 'price': 15}, {"name": "tomato", "calories": 400, "image": resta.photos[0],'fat':5, 'carbohydrates':7, 'protein':6.8,'dietLabel':'keto plan', 'price': 8}, {"name": "potato", "calories": 450, "image": resta.photos[1],'fat':4, 'carbohydrates':9.8, 'protein':5.4,'dietLabel':'carb baby', 'price': 8}, {"name": "mushroom", "calories": 380, "image": resta.photos[0],'fat':3.5, 'carbohydrates':20, 'protein':64,'dietLabel':'all meat plan', 'price': 8},{"name": "fish", "calories": 218, "image": resta.photos[2],'fat':5.5, 'carbohydrates':9.12, 'protein':2.8,'dietLabel':'food forbidden', 'price': 15}];
 
-
+const addCart = async(e, order) =>{
+  e.preventDefault()
+  try{
+    const res = await axios.post('/cart', {uid: auth.currentUser.email, order});
+    console.log(res.data);
+  }catch(err){
+    console.log(err);
+  }
+}
 
 
   return(
@@ -23,7 +33,7 @@ export default function Grodetail({resta, setView}){
       <div className="restMenulist">
         {pseudo.map((dish) => <div className="restMenu">
           <img src={dish.image} alt="" className="menuImg"/>
-          <button className="itemAdd" >
+          <button className="itemAdd" onClick={(e)=>addCart(e, dish)}>
             Add
           </button>
               <div className="dishName">{dish.name}</div>
