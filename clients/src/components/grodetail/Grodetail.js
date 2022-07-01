@@ -27,7 +27,9 @@ export default function Grodetail({resta, setView}){
 const addCart = async(e, order) =>{
   e.preventDefault()
   try{
-    const res = await axios.post('/cart', {uid: auth.currentUser.email, order});
+    // order['image']=order['url'];
+    // order['name'] =order['description'];
+    const res = await axios.post('/cart', {uid: auth.currentUser.uid, order});
     console.log(res.data);
   }catch(err){
     console.log(err);

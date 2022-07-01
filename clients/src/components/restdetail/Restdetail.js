@@ -13,7 +13,9 @@ export default function Restdetail({resta, setView}){
   const addCart = async(e, order) =>{
     e.preventDefault()
     try{
-      const res = await axios.post('/cart', {uid: auth.currentUser.email, order});
+      order['description'] = order['name'];
+      order['url'] = order['image'];
+      const res = await axios.post('/cart', {uid: auth.currentUser.uid, order});
       console.log(res.data);
     }catch(err){
       console.log(err);
@@ -56,7 +58,7 @@ export default function Restdetail({resta, setView}){
             <>
             <div className='menu-card'>
               <div className='menu-top'>
-                <button className="addBtn">Add</button>
+                <button className="addBtn" onClick={(e) =>addCart(e,menu)}>Add</button>
                 <img className='menu-img' src={menu.image} alt=''/>
               </div>
               <div className='menu-desc'>

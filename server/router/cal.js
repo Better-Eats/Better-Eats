@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const fetchAPI = require('../apis/nutrition.js');
-
+const Cal = require('../db/cal_schema.js')
 /*
 req.query = {
   query: frosted flakes,
@@ -69,6 +69,29 @@ router.post('/customitem', (req, res) => {
   fetchAPI.saveNewItem(data, (response) => {
     res.status(201).send('new custom item saved successfully');
   })
+});
+
+router.post('/cart', async(req, res) => {
+  const id = req.body.uid;
+  const date = req.body.date;
+  console.log("id", id);
+  try{
+    const isFound = await Cal.find({uid: id, date: date});
+    if (isFound.length === 0) {
+      const newCal = new Cal(req.body);
+      try {
+        await newCal.save();
+      } catch(err){
+        console.log(err);
+      }
+    } else {
+      await Cal.findOneAndUpdate({uid:id, date:date},{$inc:{totalcal: req.body.totalcal, totalCarbs: req.body.totalCarbs, totalFat:req.body.totalFat, totalProtein:req.body.totalProtein}})
+      await Cal.updateOne({uid:id, date:date}, {$push: {"items": {$each: req.body.items}}});
+    }
+    res.status(201).send('Updated');
+  }catch(err){
+    res.status(500).send(err);
+  }
 });
 
 module.exports = router;

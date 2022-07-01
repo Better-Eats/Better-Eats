@@ -21,7 +21,16 @@ router.post('/',async (req,res)=>{
   }
 })
 
+router.post('/empty', async(req, res) => {
+  console.log('req', req.body);
+  try{
+    await Cart.deleteOne({uid: req.body.uid});
+    res.status(204).send('deleted');
+  }catch(err){
+    res.status(500).send(err);
+  }
 
+})
 
 router.get('/', (req,res) => {
   console.log('here', req.query.uid );
