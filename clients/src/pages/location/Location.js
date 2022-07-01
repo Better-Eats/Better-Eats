@@ -26,7 +26,6 @@ export default function Location(){
     setLoadingRest(true)
     setLoadingMap(true)
     navigator.geolocation.getCurrentPosition((data) => {
-      // console.log(data)
       setCoordinates({ lat: data.coords.latitude, lng: data.coords.longitude })
     })
   }, [])
@@ -35,7 +34,6 @@ export default function Location(){
     const getR = async() =>{
       try{
         const res = await axios.post('/yelp', {coordinates: coordinates , ordertype: ordertype});
-        // console.log(res.data.businesses,'rest list')
         setLoadingMap(false)
         setLoadingRest(false)
         setRest(res.data.businesses);
@@ -55,7 +53,6 @@ export default function Location(){
     })
     .catch((err) => console.log(err));
   }
-  console.log('detailed', clicked);
 
   return (
     <div className = 'location' >
@@ -80,7 +77,7 @@ export default function Location(){
           <p style={{ marginTop: '10px' }}>loading restaurants...</p>
         </div>):
         (<div className = 'yelps'>
-          {rest.length>0? rest.map((resta) => <Rest key={resta.id} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
+          {rest.length>0? rest.map((resta) => <Rest key={resta.id} ordertype={ordertype} resta={resta} setView={setView} setClicked={setClicked}/>) : (<></>)}
         </div>)
         }
     </div>

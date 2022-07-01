@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
   if (req.query.limit === 'undefined') {
     data = {limit: 20};
   }
-  console.log(req.query);
   fetchAPI.getGroceryItems(data, (response) => {
     res.status(200).send(response);
   });

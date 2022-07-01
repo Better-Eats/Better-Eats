@@ -112,7 +112,7 @@ export default function Profile(){
           <img className='innerPicture' src={auth.currentUser.photoURL} alt="prop"></img>
       </div>
       <div className='welcome'>
-        Welcome, {auth.currentUser.displayName}
+        Hello {auth.currentUser.displayName}!
       </div>
       <div className='detailContainer'>
         <div>
@@ -123,13 +123,12 @@ export default function Profile(){
             <button className='historyButton' onClick={handleHistoryClick}>
               Item history
             </button>
-            <button onClick={handleEditClick}>Test</button>
           </div>
         </div>
         {currentDisplay === 'graph' ?
         <div className='graph'>
           <BarChart
-            barSize={100}
+            barSize={70}
             width={1000}
             height={500}
             data={userData.goalHistory}
