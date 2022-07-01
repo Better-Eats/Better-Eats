@@ -10,6 +10,7 @@ import Profile from './pages/profile/Profile.js';
 import Location from './pages/location/Location.js';
 import NavBar from './components/navbar/Navbar.js';
 import Newuser from './components/newuser/Newuser.js';
+import Cart from './components/cart/Cart.js';
 function App() {
 
   const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
@@ -26,6 +27,7 @@ function App() {
           <Route path="/newuser" element={<Newuser/>}/>
           <Route path="/profile" element={<Profile/>}/>
           <Route path="/location" element={<Location/>}/>
+          <Route path="/cart" element={<Cart/>}/>
         </Routes>
     </Router>
   );

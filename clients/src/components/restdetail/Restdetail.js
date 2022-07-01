@@ -1,58 +1,55 @@
 import "./restdetail.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Carousel from 'react-material-ui-carousel'
-import StarRatings from 'react-star-ratings';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {menuData} from './menuData.js';
 
 export default function Restdetail({resta, setView}){
+  const [menuItems, setMenuItems] = useState([])
 
-  const distance = resta['distance']*0.000621371192;
-  console.log({resta})
+  useEffect(() => {
+    const getRestItems = async () => {
+      try {
+        const restItems = await axios.get('/menu/items');
+        setMenuItems(restItems.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+    getRestItems()
+  }, [resta])
+
   return(
-   <div className="restDescription-container">
-     <div>
-       <div className='top'>
-        <IconButton aria-label="back" onClick={()=>setView('map')}>
-          <ArrowBackIcon />
-        </IconButton>
-      </div>
+    <div className="restDescription-container">
+      <div>
+        <div className='top'>
+          <IconButton aria-label="back" onClick={()=>setView('map')}>
+            <ArrowBackIcon />
+          </IconButton>
+        </div>
         <div className="restName">{resta.name}</div>
-        <Carousel >
-          {resta.photos?.map((photo, i) => (
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <img className='carouselimage' height='350' key={i} src={photo} />
-            </div>
-          ))}
-        </Carousel>
-       </div>
-        {/* <div className='restHeaderSection'>
-           <div className = 'price-star'>{resta['price']+'  '}
-          <StarRatings rating={resta['rating']} starRatedColor="#DA2C38"
-              numberOfStarts={5} starDimension="15px" starSpacing="1px" name='rating'/>
-          </div>
-          <div>Phone: {resta['display_phone']}</div>
-          <div>Address: {resta['location']['address1']}, {resta['location']['city']}</div>
-          <div className='open-info'>
-            <div>{resta['open_now']? 'Open': 'Closed'}</div>
-          </div>
-        </div> */}
+          <Carousel >
+            {resta.photos?.map((photo, i) => (
+              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <img className='carouselimage' alt='carousel' height='350' key={i} src={photo} />
+              </div>
+            ))}
+          </Carousel>
+        </div>
         <div className='menu-container'>
-        {menuData.map(menu=>(
-          <>
-          <div className='menu-card'>
-            <div className='menu-top'>
-                <button className="addBtn" >
-                Add
-              </button>
-              <img className='menu-img' src={menu.image} alt=''/>
-            </div>
-            <div className='menu-desc'>
-              <div className='menu-title'>
+          {menuItems.map(menu => (
+            <>
+            <div className='menu-card'>
+              <div className='menu-top'>
+                <button className="addBtn">Add</button>
+                <img className='menu-img' src={menu.image} alt=''/>
+              </div>
+              <div className='menu-desc'>
+                <div className='menu-title'>
                   <div>{menu.name}</div>
                   <div>${menu.price}</div>
                 </div>
-                {/* <div className='menu-calories'>{menu.calories} Calories</div> */}
                 <div className='nut-grid'>
                   <div className='menu-na'>Calories</div>
                   <div className='menu-na'>Fat</div>
@@ -66,18 +63,16 @@ export default function Restdetail({resta, setView}){
                   <div className='menu-calories'>{menu.protein}g</div>
                 </div>
                 <div className='ingredients-cont'>
-                {menu?.ingredients.map(ingr=>{
-                  return(
-                    <div className='ingredient'>
-                      {ingr}
-                    </div>
-                  )
-                })}
+                  {menu?.ingredients.map(ingr => {
+                    return(
+                      <div className='ingredient'>{ingr}</div>
+                    )
+                  })}
                 </div>
+              </div>
             </div>
-          </div>
-        </>
-        ))}
+          </>
+          ))}
         </div>
     </div>
   )

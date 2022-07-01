@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   fetchAPI.getFoodNutrients(req.body, (response) => {
     const labelNutrients = response.data.labelNutrients;
-    let data = {
+    const data = {
       uid: req.body.uid,
       fdcid: req.body.fdcid,
       date: req.body.date,
@@ -48,6 +48,26 @@ router.post('/', (req, res) => {
     fetchAPI.saveNewItem(data, (response) => {
       res.status(201).send('new item saved successfully');
     })
+  })
+});
+
+// post custom item into dashboard
+router.post('/customitem', (req, res) => {
+  const data = {
+    uid: req.body.uid,
+    date: req.body.date,
+    totalCal: req.body.totalCal,
+    totalCarbs: req.body.totalCarbs,
+    totalFat: req.body.totalFat,
+    totalProtein: req.body.totalProtein,
+    foodName: req.body.foodName,
+    calories: req.body.calories,
+    carbohydrates: req.body.carbohydrates,
+    fat: req.body.fat,
+    protein: req.body.protein
+  }
+  fetchAPI.saveNewItem(data, (response) => {
+    res.status(201).send('new custom item saved successfully');
   })
 });
 

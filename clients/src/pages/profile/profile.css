@@ -6,6 +6,8 @@
   background-image: url('../../assets/Profile.jpg');
   -moz-background-size:100% 100%;
   background-size: cover;
+  justify-content: center;
+  align-items: center;
 }
 .graph{
   margin: auto;
@@ -61,7 +63,6 @@
   width: 170px;
   height: 170px;
   background-color: #2E5266;
-
 }
 
 .innerPicture {
@@ -73,17 +74,15 @@
 .detailContainer {
   margin: auto;
   background-color: #FAFDFF;
-  /* background-color: white; */
   border-radius: 15px;
   width: 1030px;
   height: 610px;
-  margin-top: 0px;
+  margin-top: -30px;
   box-shadow: 5px 5px 20px grey;
-
 }
 
 .buttons {
-  padding: 30px 15px 10px 15px;
+  padding: 30px 10px 10px 15px;
   display: flex;
   justify-content: space-between;
 }
@@ -93,7 +92,7 @@
   /* position: absolute; */
   /* width: 381px; */
   width: 490px;
-  height: 67px;
+  height: 50px;
   left: 59px;
   top: 734px;
   color: white;
@@ -112,15 +111,13 @@
   background-color: white;
   letter-spacing: -0.07em;
   font-weight: bold;
-
-
 }
 
 .historyButton {
   /* position: absolute; */
   /* width: 381px; */
   width: 490px;
-  height: 67px;
+  height: 50px;
   left: 59px;
   top: 734px;
   color: white;

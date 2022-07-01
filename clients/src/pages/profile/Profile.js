@@ -114,7 +114,7 @@ export default function Profile(){
           <img className='innerPicture' src={auth.currentUser.photoURL} alt="prop"></img>
       </div>
       <div className='welcome'>
-        Welcome, {auth.currentUser.displayName}
+        Hello {auth.currentUser.displayName}!
       </div>
       <div className='goalContainer' >
         <div className='currentGoal'>Current Goal : <span className="goalCal"> {goal} cal.</span>

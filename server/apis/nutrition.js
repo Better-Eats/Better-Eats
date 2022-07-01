@@ -18,7 +18,6 @@ module.exports = {
 
   getFoodNutrients: (data, cb) => {
     const fdcid = data.fdcid;
-    console.log('fdcid', fdcid);
     axios.get(`${options.url}/food/${fdcid}`, {headers: options.header})
       .then(cb)
       .catch((err) => {

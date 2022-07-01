@@ -6,7 +6,7 @@ import {signInWithPopup, getAuth} from 'firebase/auth';
 import {useState} from 'react';
 
 export default function Home({isAuth, setIsAuth}){
-  const [newuser, setNewuser] = useState(true)
+
   let navigate = useNavigate();
   const signInWithGoogle = (e) => {
     e.preventDefault();
@@ -15,13 +15,20 @@ export default function Home({isAuth, setIsAuth}){
       localStorage.setItem("isAuth", true);
       setIsAuth(true);
       const user = auth.currentUser;
-      // axios.post('/user/info', {uid: user.uid, displayName: user.displayName, photoURL: user.photoURL, email: user.email});
-
-      if(newuser===false){
-        navigate("/curcal");
-      }else {
-        navigate("/newuser");
+      const checkUser = async() =>{
+        try {
+          const newuser = await axios.post('/users/findUser', {uid: user.uid, date: new Date()});
+          console.log('newuser',newuser);
+          if(newuser.data===false){
+            navigate("/curcal");
+          }else {
+            navigate("/newuser");
+          }
+        }catch(err){
+          console.log(err)
+        }
       }
+      checkUser();
     })
   }
   return (
