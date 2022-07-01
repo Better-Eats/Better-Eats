@@ -6,7 +6,7 @@ export default function ProgressBar(props) {
 
   const fillerStyles = {
     height: '100%',
-    width: `${completed}%`,
+    maxWidth: `${completed}%`,
     backgroundColor: bgcolor,
     borderRadius: 'inherit',
     textAlign: 'right'

@@ -110,6 +110,9 @@ export default function Curcal(){
         const totalCalories = await axios.get('/users', params);
         const currentInfo = await axios.get('/users/info', params);
         setTotalCalories(totalCalories.data[0].goal);
+        // setTotalCarbs(currentCarbs);
+        // setTotalFat(currentFat);
+        // setTotalProtein(currentProtein);
         setCurrentCalories(currentInfo.data[0].totalcal);
         setCurrentCarbs(currentInfo.data[0].totalCarbs);
         setCurrentFat(currentInfo.data[0].totalFat);
@@ -150,6 +153,7 @@ export default function Curcal(){
             completed={Math.round((currentFat / totalFat ) * 100)}
           />
            <div className='bartext2'>
+            {/* {totalFat - currentFat <= 100 : <div>g left</div> ? <div>g over</div>} */}
             {totalFat - currentFat}g left
           </div>
         </div>
@@ -219,35 +223,36 @@ export default function Curcal(){
             </div>
             <div>
               {topFive.map((item, index) => {
-                let obj = {}
-                obj.fdcId = item.fdcId;
+                const nt = {}
+                nt.fdcId = item.fdcId;
                 item.foodNutrients.map(nutrient => {
                   if (nutrient.nutrientName === "Energy") {
                     if (nutrient.unitName.toLowerCase() ==='kj') {
-                      obj.calories = Math.round(nutrient.value / 4.18);
+                      nt.calories = Math.round(nutrient.value / 4.18);
                     } else {
-                      obj.calories = nutrient.value;
+                      nt.calories = nutrient.value;
                     }
                   }
                   if (nutrient.nutrientName === "Carbohydrate, by difference"){
-                    obj.carbs = nutrient.value;
+                    nt.carbs = nutrient.value;
                   }
                   if (nutrient.nutrientName === "Total lipid (fat)"){
-                    obj.fat = nutrient.value;
+                    nt.fat = nutrient.value;
                   }
                   if (nutrient.nutrientName === "Protein"){
-                    obj.protein = nutrient.value;
+                    nt.protein = nutrient.value;
                   }
+
                 })
                 return (
                   <div className='searchResults' key={index}
-                    onClick={() => addItem(obj.fdcId)}
+                    onClick={() => addItem(nt.fdcId)}
                   >
                     <h3> {item.description} </h3>
-                    <h3> {obj.calories} KCAL </h3>
-                    <h3> {obj.carbs} g </h3>
-                    <h3> {obj.fat} g </h3>
-                    <h3> {obj.protein} g </h3>
+                    <h3> {nt.calories} KCAL </h3>
+                    <h3> {nt.carbs} g </h3>
+                    <h3> {nt.fat} g </h3>
+                    <h3> {nt.protein} g </h3>
                   </div>
                 )
               })}

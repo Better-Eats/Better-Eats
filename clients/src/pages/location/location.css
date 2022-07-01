@@ -46,7 +46,7 @@
   background: white;
 }
 
-.restaurants, .groceries{
+/* .restaurants, .groceries{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,7 +58,7 @@
   border:2px solid white;
   background: #697a2b;
   cursor: pointer;
-  }
+  } */
 
 
 .LogoSearch {
@@ -98,7 +98,7 @@
 
 }
 
-.resSelected, .groSelected{
+/* .resSelected, .groSelected{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,7 +110,7 @@
   border:2px solid white;
   background: #697a2b;
   font-weight: bold;
-}
+} */
 
 .locationRight{
   display:flex;

@@ -61,6 +61,7 @@ export default function Location(){
         <ToggleButtonGroup
           value={ordertype}
           exclusive
+          color="primary"
         >
           <ToggleButton value="res" className={ordertype === "res" ? 'resSelected' : "restaurants"} onClick={changeType} name="res">
             Restaurants

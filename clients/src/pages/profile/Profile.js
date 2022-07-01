@@ -93,7 +93,7 @@ export default function Profile(){
             over = calories - goal;
             calories = calories - over;
           }
-          goalHistory.push({name: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), calories: calories, over: over + Math.random(1) * 100, amt:200});
+          goalHistory.push({name: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), calories: calories, over: over, amt:200});
           itemHistory.push({date: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), items: item.items});
         })
         setUserData({...userData, goalHistory: goalHistory, itemHistory: itemHistory})
