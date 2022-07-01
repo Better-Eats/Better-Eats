@@ -46,15 +46,24 @@ export default function Profile(){
   // const handleChange = (e) => {
   //   setEntry(e.target.value);
   // }
+
+
+    //orange chicken
+    //rice
+    //frosted flakes
+  // const [entry, setEntry] = useState('');
   // const handleClick = (e) => {
   //   axios.get('/cal', {params: {query: entry, dataType: 'Branded'}})
   //     .then((results) => {
   //       const itemId = results.data.foods[0].fdcId;
-  //       axios.post('/cal', {uid: auth.currentUser.uid, currentTotal: {calories: 0, carbohydrates: 0, fat: 0, protein: 0}, date: '6/22/2022', fdcid: itemId, id: itemId})
+  //       axios.post('/cal', {uid: process.env.REACT_APP_GOOGLE_UID, currentTotal: {calories: 1500, carbohydrates: 0, fat: 0, protein: 0}, date: '6/29/2022', fdcid: itemId, id: itemId})
   //         .then((res) => {
   //           console.log(res);
   //         })
   //     })
+  // }
+  // const handleChange = (e) => {
+  //   setEntry(e.target.value);
   // }
 
   const handleGoalClick = (e) => {
@@ -70,13 +79,13 @@ export default function Profile(){
   // process.env.REACT_APP_UID
 
   useEffect(() => {
-    axios.get('/users', {params: {id: process.env.REACT_APP_UID}})
+    axios.get('/users', {params: {id: process.env.REACT_APP_GOOGLE_UID}})
     .then((results) => {
       setGoal(results.data[0].goal)
       return results.data[0].goal
     })
     .then((goal) => {
-      axios.get('/users/history', {params: {id: process.env.REACT_APP_UID, limit: 7}})
+      axios.get('/users/history', {params: {id: process.env.REACT_APP_GOOGLE_UID, limit: 7}})
       .then((results) => {
         const goalHistory = [];
         const itemHistory = [];
@@ -88,7 +97,7 @@ export default function Profile(){
             over = calories - goal;
             calories = calories - over;
           }
-          goalHistory.push({name: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), calories: calories, over: over + Math.random(1) * 100, amt:200});
+          goalHistory.push({name: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), calories: calories, over: over, amt:200});
           itemHistory.push({date: dates[new Date(item.date).getMonth()] + ', ' + new Date(item.date).getDate(), items: item.items});
         })
         setUserData({...userData, goalHistory: goalHistory, itemHistory: itemHistory})
@@ -127,7 +136,7 @@ export default function Profile(){
         {currentDisplay === 'graph' ?
         <div className='graph'>
           <BarChart
-            barSize={100}
+            barSize={70}
             width={1000}
             height={500}
             data={userData.goalHistory}
