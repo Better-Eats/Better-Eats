@@ -57,11 +57,40 @@ export default function Curcal(){
         protein: currentProtein
       }
     }
-
     try {
       await axios.post('/cal', params)
       const params2 = {params: {id: auth.currentUser.uid, date: date.toISOString()}}
-      console.log('params2', params2);
+      const updatedNutrients = await axios.get('/users/info', params2);
+      setCurrentCalories(updatedNutrients.data[0].totalcal);
+      setCurrentCarbs(updatedNutrients.data[0].totalCarbs);
+      setCurrentFat(updatedNutrients.data[0].totalFat);
+      setCurrentProtein(updatedNutrients.data[0].totalProtein);
+    } catch(err) {
+      console.log(err);
+    }
+  };
+
+  const addCustomItem = async (e) => {
+    e.preventDefault();
+    handleClose();
+    const date = new Date()
+    date.setHours(0, 0, 0, 0);
+    const params = {
+      uid: auth.currentUser.uid,
+      date: date.toISOString(),
+      totalCal: currentCalories + Number(e.target[2].value),
+      totalCarbs: currentCarbs + Number(e.target[4].value),
+      totalFat: currentFat + Number(e.target[6].value),
+      totalProtein: currentProtein + Number(e.target[8].value),
+      foodName: e.target[0].value,
+      calories: Number(e.target[2].value),
+      carbohydrates: Number(e.target[4].value),
+      fat: Number(e.target[6].value),
+      protein: Number(e.target[8].value)
+    };
+    try {
+      await axios.post('/cal/customitem', params)
+      const params2 = {params: {id: auth.currentUser.uid, date: date.toISOString()}}
       const updatedNutrients = await axios.get('/users/info', params2);
       setCurrentCalories(updatedNutrients.data[0].totalcal);
       setCurrentCarbs(updatedNutrients.data[0].totalCarbs);
@@ -81,6 +110,9 @@ export default function Curcal(){
         const totalCalories = await axios.get('/users', params);
         const currentInfo = await axios.get('/users/info', params);
         setTotalCalories(totalCalories.data[0].goal);
+        // setTotalCarbs(currentCarbs);
+        // setTotalFat(currentFat);
+        // setTotalProtein(currentProtein);
         setCurrentCalories(currentInfo.data[0].totalcal);
         setCurrentCarbs(currentInfo.data[0].totalCarbs);
         setCurrentFat(currentInfo.data[0].totalFat);
@@ -94,10 +126,6 @@ export default function Curcal(){
 
   return (
     <div className='curcal'>
-      <button className='test'
-      onClick={() => console.log(auth.currentUser)}>
-        Test
-      </button>
       <Piechart
         data={pieChartData}
         total={totalCalories}
@@ -125,6 +153,7 @@ export default function Curcal(){
             completed={Math.round((currentFat / totalFat ) * 100)}
           />
            <div className='bartext2'>
+            {/* {totalFat - currentFat <= 100 : <div>g left</div> ? <div>g over</div>} */}
             {totalFat - currentFat}g left
           </div>
         </div>
@@ -154,36 +183,37 @@ export default function Curcal(){
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 800,
-            height: 500,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <form onSubmit={getItems}>
-            <TextField
-              id="standard-search"
-              label="Search field"
-              type="search"
-              variant="standard"
-              fullWidth
-            />
-            <Button
-              variant="text"
-              endIcon={<SearchIcon/>}
-              type='submit'
-              sx={{py: 2}}
-            >
-              Search
-            </Button>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 800,
+              height: 500,
+              bgcolor: 'background.paper',
+              border: '2px solid #000',
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <form onSubmit={getItems}>
+              <TextField
+                id="standard-search"
+                label="Search field"
+                type="search"
+                variant="standard"
+                fullWidth
+              />
+              <Button
+                variant="text"
+                endIcon={<SearchIcon/>}
+                type='submit'
+                sx={{py: 2}}
+              >
+                Search
+              </Button>
+            </form>
             <div className="searchResults">
               <h2> Food Item</h2>
               <h2> Calories </h2>
@@ -193,86 +223,84 @@ export default function Curcal(){
             </div>
             <div>
               {topFive.map((item, index) => {
-                let obj = {}
-                obj.fdcId = item.fdcId;
+                const nt = {}
+                nt.fdcId = item.fdcId;
                 item.foodNutrients.map(nutrient => {
                   if (nutrient.nutrientName === "Energy") {
                     if (nutrient.unitName.toLowerCase() ==='kj') {
-                      obj.calories = Math.round(nutrient.value / 4.18);
+                      nt.calories = Math.round(nutrient.value / 4.18);
                     } else {
-                      obj.calories = nutrient.value;
+                      nt.calories = nutrient.value;
                     }
                   }
                   if (nutrient.nutrientName === "Carbohydrate, by difference"){
-                    obj.carbs = nutrient.value;
+                    nt.carbs = nutrient.value;
                   }
                   if (nutrient.nutrientName === "Total lipid (fat)"){
-                    obj.fat = nutrient.value;
+                    nt.fat = nutrient.value;
                   }
                   if (nutrient.nutrientName === "Protein"){
-                    obj.protein = nutrient.value;
+                    nt.protein = nutrient.value;
                   }
+
                 })
                 return (
                   <div className='searchResults' key={index}
-                    onClick={() => addItem(obj.fdcId)}
+                    onClick={() => addItem(nt.fdcId)}
                   >
                     <h3> {item.description} </h3>
-                    <h3> {obj.calories} KCAL </h3>
-                    <h3> {obj.carbs} g </h3>
-                    <h3> {obj.fat} g </h3>
-                    <h3> {obj.protein} g </h3>
+                    <h3> {nt.calories} KCAL </h3>
+                    <h3> {nt.carbs} g </h3>
+                    <h3> {nt.fat} g </h3>
+                    <h3> {nt.protein} g </h3>
                   </div>
                 )
               })}
             </div>
             <div className='addcustom'>
               <h3>Add a Custom Item</h3>
-              <form>
+              <form className='customform' onSubmit={addCustomItem}>
+              <div>
               <TextField
                 id="name"
                 label="Food Name"
                 size="small"
                 sx={{m:1, width: '15ch'}}
-                // value={Name}
-                // onChange={handleChange}
               />
               <TextField
                 id="calories"
                 label="Total Calories"
                 size="small"
                 sx={{m:1, width: '15ch'}}
-                // value={Name}
-                // onChange={handleChange}
               />
               <TextField
                 id="Carbs"
                 label="Total Carbs (g)"
                 size="small"
                 sx={{m:1, width: '15ch'}}
-                // value={Name}
-                // onChange={handleChange}
               />
               <TextField
                 id="Fat"
                 label="Total Fat (g)"
                 size="small"
                 sx={{m:1, width: '15ch'}}
-                // value={Name}
-                // onChange={handleChange}
               />
               <TextField
                 id="Protein"
                 label="Total Protein (g)"
                 size="small"
                 sx={{m:1, width: '15ch'}}
-                // value={Name}
-                // onChange={handleChange}
               />
+              </div>
+              <button
+                type='submit'
+                className='addbtn2'
+              >
+                Add New Food
+              </button>
               </form>
             </div>
-          </form>
-        </Box>
+          </Box>
         </Modal>
       </div>
     </div>

@@ -30,7 +30,7 @@
   gap: 0.5rem;
 }
 .menu-container{
-  width: 85%;
+  width: 100%;
   display: flex;
   gap: 3rem;
   flex-wrap: wrap;
@@ -39,7 +39,7 @@
 .menu-card{
   padding-bottom: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.077);
-  width: 28.2%;
+  width: 30%;
   border-radius: 5px;
 }
 .menu-img{
@@ -58,12 +58,14 @@
   padding-bottom: 5px;
 }
 .menu-title>div:nth-of-type(1) {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
 }
 .menu-title>div:nth-of-type(2) {
-  font-size: 17px;
+  font-size: 15px;
   padding-right: 5px;
+  font-weight: bold;
+  color: #B7CE63;
 }
 .menu-top{
   position: relative;
@@ -72,7 +74,7 @@
   width: 60px;
   height: 30px;
   position: absolute;
-  left: 73%;
+  left: 79%;
   top: 4%;
   color: white;
   background-color: #DA2C38;
@@ -96,6 +98,7 @@
   padding: 4px 10px;
   border-radius: 20px;
   background-color: rgba(128, 128, 128, 0.151);
+  font-size: 12px;
 }
 .nut-grid{
   display: grid;

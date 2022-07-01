@@ -72,7 +72,7 @@ example req.query = {
 
 // get user profile (username, calories goal, uid)
 router.get('/', (req, res) => {
-  USER.find({uid: req.query.id, date: req.query.date})
+  USER.find({uid: req.query.id})
     .then((results) => {
       res.status(200).send(results);
     })
@@ -109,6 +109,14 @@ router.get('/history', (req, res) => {
     res.status(200).send(response);
   });
 });
+
+router.put('/', (req, res) => {
+  // console.log(req.body);
+  USER.findOneAndUpdate({uid: req.body.uid}, {goal: req.body.goal})
+    .then((results) => {
+      res.status(201).send(results);
+    })
+})
 
 
 //update user
