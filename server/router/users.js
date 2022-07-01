@@ -110,6 +110,7 @@ router.get('/history', (req, res) => {
   });
 });
 
+//for editing goal
 router.put('/', (req, res) => {
   // console.log(req.body);
   USER.findOneAndUpdate({uid: req.body.uid}, {goal: req.body.goal})
