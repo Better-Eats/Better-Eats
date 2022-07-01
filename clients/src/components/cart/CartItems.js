@@ -20,7 +20,24 @@ export default function CartItems({item}){
       <div className="count">{count >= 0 ? count : 0}</div>
       <div className="btn" onClick={() =>setCount(count+1)}>+</div>
     </div>
-    <div className="prices">{item.calories} calories</div>
+    <div className='nutrients'>
+      <div className='nut'>
+        <div> Calories </div>
+        <div>{item.calories}kcal</div>
+      </div>
+      <div className="nut">
+        <div> Carbs </div>
+        <div>{item.carbohydrates}g</div>
+      </div>
+      <div className="nut">
+        <div> Fat </div>
+        <div>{item.fat}g</div>
+      </div>
+      <div className="nut">
+        <div> Protein </div>
+        <div>{item.protein}g</div>
+      </div>
+    </div>
     </div>)}
     </div>
   )

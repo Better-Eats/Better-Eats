@@ -69,7 +69,7 @@ export default function Cart(){
         </div>
         <div className="checkoutBtn">
           <Button variant="contained" color="success" onClick={submitOrder}>
-          Checkout
+            Checkout
           </Button>
         </div>
       </div>

@@ -14,7 +14,7 @@ export default class Piechart extends PureComponent {
     return (
       <div className='piecontainer'>
         <div className='kcal'>
-          {this.props.total - this.props.current}
+          {(this.props.total - this.props.current) < 0 ? 0 : Math.round(this.props.total - this.props.current)}
         </div>
         <div className='text'>
           kcal left

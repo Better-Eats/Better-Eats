@@ -37,7 +37,7 @@ export default function Home({isAuth, setIsAuth}){
           Better Eats Better Feats
         </div>
         <div className="homeDesc" >
-          Personalize a plan, track your nutrition, and order a healthy choice right to your door.
+          Personalize a plan, track your nutrition, and find your next healthy meal.
         </div>
         <button className="homeBtn" onClick={signInWithGoogle} >Continue with Google</button>
     </div>

@@ -94,7 +94,7 @@ export default function Location(){
                 }}
               />
             </div>
-            <input type='text' placeholder='Enter Delivery Address' />
+            <input type='text' placeholder='412 S Wilton Pl.' />
           </div>
         </div>
         <div className='Googlemap'>

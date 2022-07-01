@@ -141,7 +141,7 @@ export default function Curcal(){
             completed={Math.round((currentCarbs / totalCarbs ) * 100)}
           />
            <div className='bartext2'>
-            {totalCarbs - currentCarbs}g left
+            {Math.round(totalCarbs - currentCarbs)}g left
           </div>
         </div>
         <div className='fat'>
@@ -153,8 +153,7 @@ export default function Curcal(){
             completed={Math.round((currentFat / totalFat ) * 100)}
           />
            <div className='bartext2'>
-            {/* {totalFat - currentFat <= 100 : <div>g left</div> ? <div>g over</div>} */}
-            {totalFat - currentFat}g left
+            {Math.round(totalFat - currentFat)}g left
           </div>
         </div>
         <div className='protein'>
@@ -166,7 +165,7 @@ export default function Curcal(){
            completed={Math.round((currentProtein / totalProtein ) * 100)}
           />
            <div className='bartext2'>
-            {totalProtein - currentProtein}g left
+            {Math.round(totalProtein - currentProtein)}g left
           </div>
         </div>
       </div>
