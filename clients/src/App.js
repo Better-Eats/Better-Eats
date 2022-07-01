@@ -12,15 +12,16 @@ import NavBar from './components/navbar/Navbar.js';
 import Newuser from './components/newuser/Newuser.js';
 function App() {
 
+
+
+
   const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
 
   return (
     <Router>
-<<<<<<< HEAD
-      <NavBar isAuth={isAuth} setIsAuth={setIsAuth}/>
-=======
+
       <NavBar isAuth={isAuth} setIsAuth={setIsAuth} />
->>>>>>> 03d9e7b77cb343b1dbb080dec49a00bf0c813c07
+
         <Routes>
           <Route exact path="/" element={<Home isAuth={isAuth} setIsAuth={setIsAuth}/>}/>
           <Route path="/curcal" element={<Curcal/>}/>

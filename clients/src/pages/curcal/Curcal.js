@@ -10,13 +10,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 
-<<<<<<< HEAD
-const data = [
-  { name: 'Group A', value: 2500 },
-  { name: 'Group B', value: 300 },
-];
-const COLORS = ['#B7CE63', '#C8C6C6'];
-=======
 export default function Curcal(){
   const [totalCalories, setTotalCalories] = useState(0);
   const [currentCalories, setCurrentCalories] = useState(0);
@@ -31,7 +24,6 @@ export default function Curcal(){
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
->>>>>>> 03d9e7b77cb343b1dbb080dec49a00bf0c813c07
 
 
   const pieChartData = [
