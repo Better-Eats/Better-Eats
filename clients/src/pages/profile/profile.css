@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .graph{
   margin: auto;
   width: 1000px;
@@ -24,6 +25,37 @@
   color: #2E5266;
   letter-spacing: -0.07em;
 }
+
+.goalContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: -20px;
+}
+
+.currentGoal {
+  font-size: 30px;
+  padding-left: 10px;
+  font-family: 'Poppins';
+  font-weight: 'bold';
+  color: #fff;
+  letter-spacing: -0.07em;
+  border: 2px solid #B7CE63;
+  background: #B7CE63;
+  border-radius: 10px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.goalCal {
+  font-size: 30px;
+  padding-right: 10px;
+  font-family: 'Poppins';
+  font-weight: 'bold';
+  color: orange;
+  text-shadow: 1px 1px 2px #fff;
+  letter-spacing: -0.07em;
+}
+
 .picture {
   display: flex;
   justify-content: center;

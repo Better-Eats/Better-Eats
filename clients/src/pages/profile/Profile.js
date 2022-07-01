@@ -1,20 +1,30 @@
+import React from 'react';
 import './profile.css';
 import {useState, useEffect} from 'react';
 import Paper from '@mui/material/Paper';
-// import {
-//   Chart,
-//   ArgumentAxis,
-//   ValueAxis,
-//   BarSeries,
-//   SplineSeries,
-//   Legend,
-// } from '@devexpress/dx-react-chart-material-ui';
-import { ValueScale, Animation } from '@devexpress/dx-react-chart';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+// import { ValueScale, Animation } from '@devexpress/dx-react-chart';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {auth} from '../../firebase-config.js';
 import axios from 'axios';
 import History from './History.jsx';
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function Profile(){
   const data = [
@@ -29,6 +39,8 @@ export default function Profile(){
   });
   const [goal, setGoal] = useState(0);
   const [currentDisplay, setCurrentDisplay] = useState('graph');
+  const [open, setOpen] = React.useState(false);
+  const [entry, setEntry] = useState('');
 
   // const handleTest = (e) => {
   //   const data = {username: 'josh', goal: 100, uid: auth.currentUser.uid};
@@ -56,6 +68,9 @@ export default function Profile(){
   //     })
   // }
 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const handleGoalClick = (e) => {
     setCurrentDisplay('graph');
     console.log(userData.goalHistory)
@@ -65,14 +80,33 @@ export default function Profile(){
     setCurrentDisplay('history');
   };
 
-  const handleEditClick =(e) => {
-    axios.put('/users', {uid: auth.currentUser.uid, goal: 2000})
-      .then((res) => {
-        console.log(res);
+  // const handleEditClick =(e) => {
+  //   axios.put('/users', {uid: auth.currentUser.uid, goal: 2000})
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  // }
+
+  const changeHandler = (e) => {
+    setEntry(e.target.value);
+  }
+
+  const handleSubmitEditGoal = (e) => {
+    e.preventDefault();
+    console.log('acutual value', entry)
+    axios.put(`/users`, {goal: Number(entry), uid: auth.currentUser.uid } )
+      .then((result) => {
+        console.log('put result==>', result.data.goal);
+        setGoal(Number(entry))
+      })
+      .catch((err) => {
+        console.log('error getting data', err);
+      })
+      .then(() => {
+        handleClose();
+        setEntry('');
       })
   }
-  // current Goal, number, edit
-  // process.env.REACT_APP_UID
 
   useEffect(() => {
     axios.get('/users', {params: {id: auth.currentUser.uid}})
@@ -102,7 +136,7 @@ export default function Profile(){
     .catch((err) => {
         console.log('error getting data', err);
     })
-  }, [])
+  }, [goal])
 
 
 
@@ -113,6 +147,35 @@ export default function Profile(){
       </div>
       <div className='welcome'>
         Hello {auth.currentUser.displayName}!
+      </div>
+      <div className='goalContainer' >
+        <div className='currentGoal'>Current Goal : <span className="goalCal"> {goal} cal.</span>
+          <Button onClick={handleOpen}>
+            <ModeEditOutlineOutlinedIcon sx={{ color: '#fff', border: '2px solid #fff', padding: '2px' }} ></ModeEditOutlineOutlinedIcon>
+          </Button>
+        </div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Edit Your Current Calories
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Type a number for your new target calories.
+            </Typography><br></br>
+            <form onSubmit={handleSubmitEditGoal} >
+              <TextField id="outlined-basic" label="New Calories" variant="outlined" value={entry} onChange={changeHandler}
+              /> &nbsp;&nbsp;
+              <Button variant="outlined" type="submit"
+              sx={{ p: 1.8 }}
+              >Submit</Button>
+            </form>
+          </Box>
+        </Modal>
       </div>
       <div className='detailContainer'>
         <div>
