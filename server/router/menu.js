@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
   if (req.query.limit === 'undefined') {
     data = {limit: 20};
   }
-  console.log(req.query);
   fetchAPI.getGroceryItems(data, (response) => {
     res.status(200).send(response);
   });
@@ -27,8 +26,7 @@ router.get('/database', (req, res) => {
 });
 
 router.get('/items', (req, res) => {
-  console.log('this should show');
-  menuAi.getItems((response) => {
+  menuAi.getAll((response) => {
     res.send(response);
   })
 });

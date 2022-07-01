@@ -66,9 +66,6 @@ export default function Profile(){
     setCurrentDisplay('history');
   };
 
-  const handleEditClick = (e) => {
-    setCurrentDisplay('eddit')
-  }
   // current Goal, number, edit
   // process.env.REACT_APP_UID
 
@@ -112,7 +109,7 @@ export default function Profile(){
       </div>
       <div className='goalContainer' >
         <div className='currentGoal'>Current Goal : <span className="goalCal"> {goal} cal.</span>
-        <button style={{}} onClick={handleEditClick}><EditIcon sx={{color: '#B7CE63', backgroundColor: "fff"}} ></EditIcon></button>
+        <button style={{}} ><EditIcon sx={{color: '#B7CE63', backgroundColor: "fff"}} ></EditIcon></button>
         </div>
 
       </div>
