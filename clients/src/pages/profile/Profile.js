@@ -14,6 +14,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
 import {auth} from '../../firebase-config.js';
 import axios from 'axios';
 import History from './History.jsx';
+import EditIcon from '@mui/icons-material/Edit';;
 
 
 export default function Profile(){
@@ -64,17 +65,21 @@ export default function Profile(){
   const handleHistoryClick = (e) => {
     setCurrentDisplay('history');
   };
+
+  const handleEditClick = (e) => {
+    setCurrentDisplay('eddit')
+  }
   // current Goal, number, edit
   // process.env.REACT_APP_UID
 
   useEffect(() => {
-    axios.get('/users', {params: {id: auth.currentUser.uid}})
+    axios.get('/users', {params: {id: process.env.REACT_APP_UID}})
     .then((results) => {
       setGoal(results.data[0].goal)
       return results.data[0].goal
     })
     .then((goal) => {
-      axios.get('/users/history', {params: {id: auth.currentUser.uid, limit: 7}})
+      axios.get('/users/history', {params: {id: process.env.REACT_APP_UID, limit: 7}})
       .then((results) => {
         const goalHistory = [];
         const itemHistory = [];
@@ -97,8 +102,6 @@ export default function Profile(){
     })
   }, [])
 
-
-
   return (
     <div className='profile'>
       <div className='picture'>
@@ -106,6 +109,12 @@ export default function Profile(){
       </div>
       <div className='welcome'>
         Welcome, {auth.currentUser.displayName}
+      </div>
+      <div className='goalContainer' >
+        <div className='currentGoal'>Current Goal : <span className="goalCal"> {goal} cal.</span>
+        <button style={{}} onClick={handleEditClick}><EditIcon sx={{color: '#B7CE63', backgroundColor: "fff"}} ></EditIcon></button>
+        </div>
+
       </div>
       <div className='detailContainer'>
         <div>
