@@ -9,6 +9,7 @@ Better Eats is fitness web application with features including food diaries, cal
 
 ## **Installation**
 **_npm install_**: install necessary dependencies
+
 **_npm start_**: Runs the app in the development mode. Open http://localhost:3000 to view it in your browser.
 
 ## **Components**
